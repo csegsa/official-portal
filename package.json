@@ -1,0 +1,25 @@
+{
+  "name": "official-portal",
+  "version": "1.0.0",
+  "description": "A online web portal for CSEGSA",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node server/index.js",
+    "build" : "cd csegsa_website && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhinand5ai/official-portal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhinand5ai/official-portal/issues"
+  },
+  "homepage": "https://github.com/abhinand5ai/official-portal#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
