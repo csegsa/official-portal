@@ -29,9 +29,9 @@ Then('I should be on the Job Posting Page', function () {
 
 // Scenario: View the Job Posting Page
 
-Given('I am on the Job Posting Page', function () {
+Given('I am on the Job Posting Page', async function () {
     // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+    await driver.get('http://localhost:3001/jobpostings');
 });
 
 Given('I am not logged in', function () {
