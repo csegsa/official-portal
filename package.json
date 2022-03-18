@@ -4,9 +4,9 @@
   "description": "A online web portal for CSEGSA",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node server/index.js",
-    "build" : "cd csegsa_website && npm install && npm run build"
+    "test": "cucumber-js",
+    "start": "node server/index.js",
+    "build": "cd csegsa_website && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,5 +21,10 @@
   "homepage": "https://github.com/abhinand5ai/official-portal#readme",
   "dependencies": {
     "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^7.3.2",
+    "install": "^0.13.0",
+    "npm": "^8.5.5"
   }
 }
