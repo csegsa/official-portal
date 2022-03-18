@@ -1,10 +1,19 @@
 const assert = require('assert');
 const { Given, When, Then } = require('@cucumber/cucumber');
+const { Builder, By, Capabilities, Key } = require('selenium-webdriver');
+const { expect } = require('chai');
+
+require("chromedriver");
+
+// driver setup
+const capabilities = Capabilities.chrome();
+capabilities.set('chromeOptions', { "w3c": false });
+const driver = new Builder().withCapabilities(capabilities).build();
 
 // Scenario: Move to the Job Posting Page
-Given('I am on the CSEGSA Home Page', function () {
+Given('I am on the CSEGSA Home Page', async function () {
     // Write code here that turns the phrase above into concrete actions
-    return 'pending';
+    await driver.get('http://localhost:3001/');
 });
 
 When('I click on the {string} link', function (string) {
@@ -49,10 +58,6 @@ Given('I am logged in as an {string}', function (string) {
     return 'pending';
 });
 
-Then('I should see add a post button', function () {
-    // Write code here that turns the phrase above into concrete actions
-    return 'pending';
-});
 
 Then('I should be on the Add a Job Posting Page', function () {
     // Write code here that turns the phrase above into concrete actions
