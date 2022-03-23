@@ -7,6 +7,7 @@ import { AdminProvider } from './components/context/AdminContext';
 import Home from './components/pages/Home';
 import Events from './components/pages/Events';
 import JobPostings from './components/pages/JobPostings';
+import Header from './components/HeaderComponent';
 
 const App = () => {
   return (
@@ -14,7 +15,7 @@ const App = () => {
         <AppProvider>
           <AdminProvider>
             <div className="App">
-              {/* <Navbar /> */}
+              <Header/>
               <Routes>
                 <Route exact={true} path="/" element={<Home />} />
                 <Route exact path = "/events" element={<Events />} />

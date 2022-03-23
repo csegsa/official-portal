@@ -1,0 +1,33 @@
+{
+  "name": "official-portal",
+  "version": "1.0.0",
+  "description": "A online web portal for CSEGSA",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js",
+    "start": "node server/index.js",
+    "build": "cd csegsa_website && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhinand5ai/official-portal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhinand5ai/official-portal/issues"
+  },
+  "homepage": "https://github.com/abhinand5ai/official-portal#readme",
+  "dependencies": {
+    "chai": "^4.3.6",
+    "chromedriver": "^99.0.0",
+    "express": "^4.17.3",
+    "selenium-webdriver": "^4.1.1"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^7.3.2",
+    "install": "^0.13.0",
+    "npm": "^8.5.5"
+  }
+}
