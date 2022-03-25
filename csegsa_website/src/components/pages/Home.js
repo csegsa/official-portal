@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
+import TeamBoard from '../team/TeamBoard';
 
 const Home = (props) => {
 
@@ -18,6 +19,8 @@ const Home = (props) => {
 
             {username !== '' && 
             <div>Hello, {username}</div>}
+
+            <TeamBoard/>
         </div>
       );  
 }
