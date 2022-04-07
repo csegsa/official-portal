@@ -15,6 +15,8 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+console.log(__dirname);
+console.log(resolve(__dirname, '../client/build'));
 // Have Node serve the files for our built React app
 app.use(express.static(resolve(__dirname, '../client/build')));
 
@@ -25,12 +27,13 @@ app.get('/api', (req, res) => {
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(resolve(__dirname, '../client/build', '  index.html'));
+  res.sendFile(resolve(__dirname, '../client/build', 'index.html'));
 });
 
 
 const CONNECT_URL = process.env.MONGODB_CONNECTION_STRING;
 const PORT = process.env.PORT || 5000;
+
 
 
 try {
@@ -41,4 +44,5 @@ try {
   });
 } catch (err) {
   console.log("Error connecting to MongoDB");
+  console.log(CONNECT_URL);
 }
