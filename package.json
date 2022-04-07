@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cucumber-js",
     "start": "node server/index.js",
-    "build": "cd csegsa_website && npm install && npm run build"
+    "build": "cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",

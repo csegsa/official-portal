@@ -13,6 +13,7 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
-    "require-jsdoc" : "off"
+    "require-jsdoc" : "off",
+	  "prettier/prettier": ["error", { "singleQuote": true }]
   }
 }
