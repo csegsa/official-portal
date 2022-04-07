@@ -2,6 +2,7 @@
   "name": "csegsa-portal",
   "version": "0.0.1",
   "dependencies": {
+    "bootstrap": "4.6.0",
     "@babel/core": "^7.17.7",
     "@babel/highlight": "^7.16.10",
     "@fullcalendar/daygrid": "^5.10.1",
@@ -57,7 +58,6 @@
     "typescript": "4.2.3"
   },
   "devDependencies": {
-    "bootstrap": "4.6.0",
     "eslint": "^8.12.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
