@@ -1,24 +1,44 @@
 // server/index.js
-const path = require('path');
-const express = require('express');
+import { dirname, join, resolve } from 'path';
+import { fileURLToPath } from 'url';
+import express from 'express';
+import 'dotenv/config';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import mongoose from "mongoose";
 
-const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+app.use(bodyParser.json({ limit: '50mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(cors());
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(resolve(__dirname, '../client/build')));
 
 // Handle GET requests to /api route
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
+app.get('/api', (req, res) => {
+  res.json({ message: 'Hello from server!' });
 });
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../csegsa_website/build', 'index.html'));
+  res.sendFile(resolve(__dirname, '../client/build', '  index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+
+const CONNECT_URL = process.env.MONGODB_CONNECTION_STRING;
+const PORT = process.env.PORT || 5000;
+
+
+try {
+  await mongoose.connect(CONNECT_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+  console.log("Connected to MongoDB");
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+} catch (err) {
+  console.log("Error connecting to MongoDB");
+}
