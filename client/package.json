@@ -1,0 +1,76 @@
+{
+  "name": "csegsa-portal",
+  "version": "0.0.1",
+  "dependencies": {
+    "@babel/core": "^7.17.7",
+    "@babel/highlight": "^7.16.10",
+    "@fullcalendar/daygrid": "^5.10.1",
+    "@fullcalendar/react": "^5.10.1",
+    "@surma/rollup-plugin-off-main-thread": "^2.2.3",
+    "caniuse-lite": "^1.0.30001316",
+    "classnames": "2.2.6",
+    "es-abstract": "^1.19.1",
+    "fast-glob": "^3.2.11",
+    "lodash": "^4.17.21",
+    "moment": "2.29.1",
+    "node-sass": "^7.0.1",
+    "nouislider": "14.6.4",
+    "react": "17.0.2",
+    "react-datetime": "^3.1.1",
+    "react-dom": "17.0.2",
+    "react-router": "5.2.0",
+    "react-router-dom": "5.2.0",
+    "react-router-hash-link": "^2.4.3",
+    "react-scripts": "^5.0.0",
+    "reactstrap": "8.9.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && gulp licenses",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "compile-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.css",
+    "minify-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.min.css --output-style compressed",
+    "map-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.css --source-map true",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "optionalDependencies": {
+    "jquery": "3.6.0",
+    "typescript": "4.2.3"
+  },
+  "devDependencies": {
+    "bootstrap": "4.6.0",
+    "eslint": "^8.12.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "gulp": "^3.9.1",
+    "gulp-append-prepend": "1.0.8",
+    "prettier": "^2.6.2"
+  },
+  "description": "CSEGSA Portal - Official Computer Science and Engineering Graduate Student Association portal.",
+  "main": "src/assets/scss/paper-kit.scss",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csegsa/widgets-server.git"
+  }
+}
