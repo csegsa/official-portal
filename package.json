@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "cucumber-js",
-    "start": "node server/index.js",
+    "start": "nodemon server/index.js",
     "build": "npm install && cd client && npm install && npm run build",
     "lint": "eslint ./server --fix"
   },
