@@ -6,7 +6,7 @@ import 'dotenv/config';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from "mongoose";
-
+import eventsRouter from './routes/events.js';
 
 const app = express();
 
@@ -21,9 +21,7 @@ console.log(resolve(__dirname, '../client/build'));
 app.use(express.static(resolve(__dirname, '../client/build')));
 
 // Handle GET requests to /api route
-app.get('/api', (req, res) => {
-  res.json({ message: 'Hello from server!' });
-});
+app.use('/api/events', eventsRouter);
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
