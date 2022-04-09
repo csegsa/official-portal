@@ -1,6 +1,8 @@
 import EventPageHeader from "components/Headers/EventPageHeader";
 import MainNavbar from "components/Navbars/MainNavbar";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import DateTimePicker from 'react-datetime-picker';
 import { Container, Input, Row, FormGroup, Label, FormText, Form, Button, Col } from "reactstrap";
 import csegsaApi from "api/csegsaApi";
@@ -10,6 +12,7 @@ const AddItem = () => {
     const [eventName, setEventName] = useState("");
     const [eventDescription, setEventDescription] = useState("");
     const [eventLocation, setEventLocation] = useState("");
+    const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,6 +28,8 @@ const AddItem = () => {
 
         }).then(res => {
             console.log(res);
+            history.push("/events");
+
         }).catch(err => {
             console.log(err);
         });

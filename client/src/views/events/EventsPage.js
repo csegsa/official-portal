@@ -51,11 +51,11 @@ function EventsPage() {
               <Link to="/add-event" className="btn btn-danger">Add Event</Link>
               </Row>
               <Row>
-                <Col md='6'>
+                
                   <Row>
                     {isLoaded ? eventsList : "Loading Events"}
                   </Row>
-                </Col>
+                
               </Row>
               </Col>
             </Row>
