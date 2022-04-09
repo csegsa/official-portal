@@ -13,6 +13,7 @@ import LandingPage from "views/homepage/LandingPage"
 import LoginPage from "views/userlogin/LoginPage"
 import JobPostings from "views/jobs/JobPostings"
 import EventsPage from "views/events/EventsPage"
+import AddEvent from "views/events/AddEvent"
 
 // Examples modules - To be removed later.
 import ProfilePage from "views/examples/ProfilePage.js"
@@ -25,6 +26,7 @@ ReactDOM.render(
       <Route path='/home' render={props => <LandingPage {...props} />} />
       <Route path='/login' render={props => <LoginPage {...props} />} />
       <Route path='/events' render={props => <EventsPage {...props} />} />
+      <Route path='/add-event' render={props => <AddEvent {...props} />} />
       <Route path='/jobs' render={props => <JobPostings {...props} />} />
 
       {/* Example routes - To be removed later */}

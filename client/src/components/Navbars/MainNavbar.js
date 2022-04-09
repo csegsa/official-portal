@@ -34,6 +34,7 @@ function MainNavbar() {
     }
   })
   return (
+    <>
     <Navbar className={classnames("fixed-top", navbarColor)} color-on-scroll='300' expand='lg'>
       <Container>
         <div className='navbar-translate'>
@@ -93,6 +94,7 @@ function MainNavbar() {
                 </Collapse>
             </Container>
         </Navbar>
+        </>
     );
 }
 
