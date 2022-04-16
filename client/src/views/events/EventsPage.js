@@ -5,6 +5,8 @@ import { Container, Row, Col, Card, Button } from "reactstrap"
 
 import FullCalendar from "@fullcalendar/react" // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid" // a plugin!
+import interactionPlugin from "@fullcalendar/interaction"; // needed
+import listPlugin from '@fullcalendar/list'; //For List View
 
 // core components
 import MainNavbar from "components/Navbars/MainNavbar.js"
@@ -26,15 +28,15 @@ function EventsPage() {
     }
   })
 
-  React.useEffect(() => {
-    csegsaApi.get("/events").then(res => {
-      console.log(res.data);
-      setEvents(res.data)
-      setIsloaded(true)
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   csegsaApi.get("/events").then(res => {
+  //     console.log(res.data);
+  //     setEvents(res.data)
+  //     setIsloaded(true)
+  //   });
+  // }, []);
 
-  const eventsList = events.map(event => <EventItem key={event._id} event={event} />);
+  // const eventsList = events.map(event => <EventItem key={event._id} event={event} />);
   return (
     <>
       <MainNavbar />
