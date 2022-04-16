@@ -17,7 +17,7 @@ import { Link } from "react-router-dom"
 function EventsPage() {
   const [events, setEvents] = React.useState([])
   const [isLoaded, setIsloaded] = React.useState(false)
-  
+
   document.documentElement.classList.remove("nav-open")
   React.useEffect(() => {
     document.body.classList.add("profile-page")
@@ -42,21 +42,38 @@ function EventsPage() {
       <div className='main'>
         <div className='section text-center'>
           <Container>
-            <Row>
-              <Col md='6'>
-                <FullCalendar plugins={[dayGridPlugin]} initialView='dayGridMonth' />
+          <Row>
+              <Col md="8">
+                <FullCalendar
+                  plugins={[ dayGridPlugin, interactionPlugin, listPlugin ]}
+                  initialView="listWeek"
+                  headerToolbar={{
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,listWeek'
+                  }}
+                  events={[
+                    { title: 'event 1', date: '2022-04-13' },
+                    { title: 'event 2', date: '2022-04-09' },
+                    { title: 'event 2', date: '2022-04-09' },
+                    { title: 'event 2', date: '2022-04-09' },
+                    { title: 'event 2', date: '2022-04-12' },
+                    { title: 'event 2', date: '2022-04-13' },
+                    { title: 'event 2', date: '2022-04-15' }
+                  ]}
+                />
               </Col>
-              <Col md='6'>
-              <Row>
-              <Link to="/add-event" className="btn btn-danger">Add Event</Link>
-              </Row>
-              <Row>
-                
-                  <Row>
-                    {isLoaded ? eventsList : "Loading Events"}
-                  </Row>
-                
-              </Row>
+              <Col md="4">
+                <Card className="ml-auto mr-auto">
+                <div className="card-body">
+                <h3 className="card-title">Sample Event</h3>
+                <h6 class="card-subtitle mb-2 text-muted">Event subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text"><b>Venue:</b></p>
+                <p class="card-text"><b>Time:</b></p>
+                <a href="#" class="btn btn-success">RSVP</a>
+                </div>
+                </Card>
               </Col>
             </Row>
           </Container>
