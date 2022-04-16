@@ -48,7 +48,7 @@ function EventsPage() {
               <Col md="8">
                 <FullCalendar
                   plugins={[ dayGridPlugin, interactionPlugin, listPlugin ]}
-                  initialView="listWeek"
+                  initialView="dayGridMonth"
                   headerToolbar={{
                     left: 'prev,next today',
                     center: 'title',
@@ -69,10 +69,10 @@ function EventsPage() {
                 <Card className="ml-auto mr-auto">
                 <div className="card-body">
                 <h3 className="card-title">Sample Event</h3>
-                <h6 class="card-subtitle mb-2 text-muted">Event subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p class="card-text"><b>Venue:</b></p>
-                <p class="card-text"><b>Time:</b></p>
+                <h6 className="card-subtitle mb-2 text-muted">Event subtitle</h6>
+                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p className="card-text"><b>Venue:</b></p>
+                <p className="card-text"><b>Time:</b></p>
                 <a href="#" class="btn btn-success">RSVP</a>
                 </div>
                 </Card>
