@@ -16,9 +16,12 @@ import EventItem from "./EventItem"
 import csegsaApi from "api/csegsaApi.js"
 import { Link } from "react-router-dom"
 
+
+
 function EventsPage() {
   const [events, setEvents] = React.useState([])
   const [isLoaded, setIsloaded] = React.useState(false)
+  const [displayEvent, setDisplayEvent] = React.useState(null) ;
 
   document.documentElement.classList.remove("nav-open")
   React.useEffect(() => {
@@ -28,15 +31,64 @@ function EventsPage() {
     }
   })
 
-  // React.useEffect(() => {
-  //   csegsaApi.get("/events").then(res => {
-  //     console.log(res.data);
-  //     setEvents(res.data)
-  //     setIsloaded(true)
-  //   });
-  // }, []);
+  React.useEffect(() => {
+    csegsaApi.get("/events").then(res => {
+      console.log(res.data);
+      setEvents(res.data);
+      setIsloaded(true);
+    });
+  }, []);
 
-  // const eventsList = events.map(event => <EventItem key={event._id} event={event} />);
+  const viewEvent = ((arg) => {
+    // console.log(arg.event) ;
+    let filterId = arg.event.id
+    // console.log(events)
+    let selectedEvent = events.filter(event => event._id === filterId)
+    // console.log("inside view event") ;
+    // console.log(selectedEvent) ;
+    setDisplayEvent(selectedEvent) ;
+  })
+  // console.log(eventsList) ;
+
+  // <[
+  //   { title: 'event 1', date: '2022-04-13' },
+  //   { title: 'event 2', date: '2022-04-09' },
+  //   { title: 'event 2', date: '2022-04-09' },
+  //   { title: 'event 2', date: '2022-04-09' },
+  //   { title: 'event 2', date: '2022-04-12' },
+  //   { title: 'event 2', date: '2022-04-13' },
+  //   { title: 'event 2', date: '2022-04-15' }
+  // ]>
+  const eventsList = events.map(event => {
+    return {
+      id:event._id,
+      title:event.name,
+      date:event.start_time,
+    }
+  });
+
+  // console.log(eventsList) ;
+
+    let cardContent = <Card className="ml-auto mr-auto">
+    <div className="card-body">
+    <h3 className="card-title">No Event Selected</h3>
+    </div>
+    </Card>
+
+  if(displayEvent != null) {
+    cardContent = <Card className="ml-auto mr-auto">
+    <div className="card-body">
+    <h3 className="card-title">{displayEvent[0].name}</h3>
+    <h6 className="card-subtitle mb-2 text-muted">Event subtitle</h6>
+    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <p className="card-text"><b>Venue: {displayEvent[0].location}</b></p>
+    <p className="card-text"><b>Time: {displayEvent[0].start_time}</b></p>
+    <a href="#" class="btn btn-success">RSVP</a>
+    </div>
+    </Card>
+  }
+
+
   return (
     <>
       <MainNavbar />
@@ -54,28 +106,18 @@ function EventsPage() {
                     center: 'title',
                     right: 'dayGridMonth,listWeek'
                   }}
-                  events={[
-                    { title: 'event 1', date: '2022-04-13' },
-                    { title: 'event 2', date: '2022-04-09' },
-                    { title: 'event 2', date: '2022-04-09' },
-                    { title: 'event 2', date: '2022-04-09' },
-                    { title: 'event 2', date: '2022-04-12' },
-                    { title: 'event 2', date: '2022-04-13' },
-                    { title: 'event 2', date: '2022-04-15' }
-                  ]}
+                  events={eventsList}
+                  eventClick={(val) => {
+                    viewEvent(val) ;
+                    // console.log(displayEvent);
+                  }}
                 />
               </Col>
               <Col md="4">
-                <Card className="ml-auto mr-auto">
-                <div className="card-body">
-                <h3 className="card-title">Sample Event</h3>
-                <h6 className="card-subtitle mb-2 text-muted">Event subtitle</h6>
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p className="card-text"><b>Venue:</b></p>
-                <p className="card-text"><b>Time:</b></p>
-                <a href="#" class="btn btn-success">RSVP</a>
-                </div>
-                </Card>
+                <Row>
+                <Link to="/add-event" className="btn btn-danger">Add Event</Link>
+                </Row>
+                {cardContent}
               </Col>
             </Row>
           </Container>
