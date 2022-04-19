@@ -28,11 +28,8 @@ app.get('*', (req, res) => {
   res.sendFile(resolve(__dirname, '../client/build', 'index.html'));
 });
 
-
 const CONNECT_URL = process.env.MONGODB_CONNECTION_STRING;
-const PORT = process.env.PORT || 5000;
-
-
+const PORT = process.env.PORT || 5001;
 
 try {
   await mongoose.connect(CONNECT_URL, { useNewUrlParser: true, useUnifiedTopology: true });
