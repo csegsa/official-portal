@@ -11,7 +11,7 @@
   "scripts": {
     "test": "cucumber-js",
     "start": "node server/index.js",
-    "build": "npm install && cd client && npm install && npm run build",
+    "build": "npm install && cd client && npm install &&  export DISABLE_ESLINT_PLUGIN=true && npm run build",
     "lint": "eslint ./server --fix"
   },
   "repository": {
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.3.2",
+    "cypress": "^9.5.4",
     "eslint": "^8.14.0",
     "eslint-config-google": "^0.14.0",
     "install": "^0.13.0",
