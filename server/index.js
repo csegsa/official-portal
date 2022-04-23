@@ -9,15 +9,23 @@ import mongoose from "mongoose";
 import eventsRouter from './routes/events.js';
 import jobsRouter from './routes/jobs.js' ;
 
-const app = express();
+const app = require('express')();
+const path = require('path');
+const mongoose = require('mongoose');
+const url = require('url');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const eventsRouter = require('./routes/events.js');
 
-app.use(bodyParser.json({ limit: '50mb', extended: true }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+require('dotenv').config();
+
+app.use(bodyParser.json({limit: '50mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cors());
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-console.log(__dirname);
-console.log(resolve(__dirname, '../client/build'));
+const dirname = path.dirname(url.fileURLToPath(require("meta").url));
+console.log(dirname);
+console.log(path.resolve(dirname, '../client/build'));
 // Have Node serve the files for our built React app
 app.use(express.static(resolve(__dirname, '../client/build')));
 
@@ -27,7 +35,7 @@ app.use('/api/jobs', jobsRouter) ;
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(resolve(__dirname, '../client/build', 'index.html'));
+    res.sendFile(resolve(__dirname, '../client/build', 'index.html'));
 });
 
 
