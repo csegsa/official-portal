@@ -48,3 +48,4 @@ export const createEvent = async (req, res) => {
         console.log(`Error creating event ${err}`);
     }
 };
+

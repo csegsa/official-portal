@@ -1,5 +1,5 @@
 // server/index.js
-import { dirname, join, resolve } from 'path';
+import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import 'dotenv/config';
@@ -27,7 +27,7 @@ app.use('/api/jobs', jobsRouter) ;
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(resolve(__dirname, '../client/build', 'index.html'));
+    res.sendFile(resolve(__dirname, '../client/build', 'index.html'));
 });
 
 

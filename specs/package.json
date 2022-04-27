@@ -1,0 +1,11 @@
+{
+  "name": "specs-csegsa",
+  "version": "1.0.0",
+  "description": "Specs for the Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "author": "",
+  "license": "ISC"
+}
