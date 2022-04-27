@@ -1,13 +1,12 @@
 import React from 'react'
 
 // reactstrap components
-import { Button, Card, CardBody, CardFooter, CardTitle, Container, Row, Col } from 'reactstrap'
 
 // core components
 import MainNavbar from 'components/Navbars/MainNavbar.js'
 import JobPostingHeader from 'components/Headers/JobPostingHeader'
 import MainFooter from 'components/Footers/MainFooter'
-import JobsForm from './AddJobs.js' ;
+import JobsForm from './AddJobs.js'
 
 function JobPostings() {
   document.documentElement.classList.remove('nav-open')
