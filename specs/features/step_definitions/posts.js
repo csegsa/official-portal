@@ -1,8 +1,6 @@
 const assert = require('assert');
 const { Given, When, Then } = require('@cucumber/cucumber');
-const { Builder, By, Capabilities, Key } = require('selenium-webdriver');
-const { expect } = require('chai');
-
+const { Builder, Capabilities} = require('selenium-webdriver');
 require("chromedriver");
 
 // driver setup
@@ -13,7 +11,7 @@ const driver = new Builder().withCapabilities(capabilities).build();
 // Scenario: Move to the Job Posting Page
 Given('I am on the CSEGSA Home Page', async function () {
     // Write code here that turns the phrase above into concrete actions
-    await driver.get('http://localhost:3001/');
+    await driver.get('http://localhost:5000/');
 });
 
 When('I click on the {string} link', function (string) {
@@ -31,7 +29,7 @@ Then('I should be on the Job Posting Page', function () {
 
 Given('I am on the Job Posting Page', async function () {
     // Write code here that turns the phrase above into concrete actions
-    await driver.get('http://localhost:3001/jobpostings');
+    await driver.get('http://localhost:5000/jobpostings');
 });
 
 Given('I am not logged in', function () {

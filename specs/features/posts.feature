@@ -1,5 +1,5 @@
 Feature: Job Posting Page
-    A page listing availabe jobs posted by the CSEGSA alumni/members
+    A page listing available jobs posted by the CSEGSA alumni/members
 
     Scenario: Move to the Job Posting Page
         Given I am on the CSEGSA Home Page
@@ -35,6 +35,8 @@ Feature: Job Posting Page
         Then I should not see add a post button
         When I try to access the "Add a Post" link
         Then I should be shown an error message
+        Examples:
+            |  |
 
 
 

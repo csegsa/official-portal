@@ -9,7 +9,7 @@
     "node": "=16.14.0"
   },
   "scripts": {
-    "test": "cucumber-js",
+    "test": "cd specs && npm test",
     "start": "node server/index.js",
     "build": "npm install && cd client && npm install &&  export DISABLE_ESLINT_PLUGIN=true && npm run build",
     "lint": "eslint ./server --fix"
@@ -37,7 +37,7 @@
     "selenium-webdriver": "^4.1.1"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "^7.3.2",
+
     "cypress": "^9.5.4",
     "eslint": "^8.14.0",
     "eslint-config-google": "^0.14.0",
