@@ -1,5 +1,5 @@
 // server/index.js
-import { dirname, join, resolve } from 'path';
+import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import 'dotenv/config';
@@ -9,23 +9,15 @@ import mongoose from "mongoose";
 import eventsRouter from './routes/events.js';
 import jobsRouter from './routes/jobs.js' ;
 
-const app = require('express')();
-const path = require('path');
-const mongoose = require('mongoose');
-const url = require('url');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const eventsRouter = require('./routes/events.js');
+const app = express();
 
-require('dotenv').config();
-
-app.use(bodyParser.json({limit: '50mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.json({ limit: '50mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 
-const dirname = path.dirname(url.fileURLToPath(require("meta").url));
-console.log(dirname);
-console.log(path.resolve(dirname, '../client/build'));
+const __dirname = dirname(fileURLToPath(import.meta.url));
+console.log(__dirname);
+console.log(resolve(__dirname, '../client/build'));
 // Have Node serve the files for our built React app
 app.use(express.static(resolve(__dirname, '../client/build')));
 
