@@ -36,6 +36,7 @@ function LandingPageHeader() {
           <div className="motto text-center">
             <h1><b>CSEGSA</b></h1>
             <h3><b>Computer Science and Engineering Graduate Student Association</b></h3>
+            <br />
             <Button className="btn-round" color="danger" href="#about">
                         Learn More
             </Button>
