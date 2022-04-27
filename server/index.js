@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from "mongoose";
 import eventsRouter from './routes/events.js';
+import jobsRouter from './routes/jobs.js' ;
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(resolve(__dirname, '../client/build')));
 
 // Handle GET requests to /api route
 app.use('/api/events', eventsRouter);
+app.use('/api/jobs', jobsRouter) ;
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
