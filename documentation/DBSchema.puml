@@ -1,0 +1,62 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "User" as user {
+  *user_id : number <<generated>>
+  --
+  *username : text
+  *password : text
+  *email : text
+  *first_name : text
+  *last_name : text
+  *phone : text
+}
+
+entity "Role" as role {
+  *role_id : number <<generated>>
+  --
+  *role_name : text
+  *description : text
+}
+
+
+entity "UserRole" as user_role {
+  *user_role_id : number <<generated>>
+  --
+  *user_id : number
+  *role_id : number
+}
+
+entity "Event" as event {
+  *event_id : number <<generated>>
+  --
+  *event_name
+  *event_description
+  *event_start
+  *event_end
+  *event_location
+  *[user_id] : [number] (people attending)
+  }
+
+entity "Job" as job {
+  *job_id
+  --
+  *job_name
+  *job_description
+  *job_location
+  *job_created_at
+  *job_updated_at
+  *user_id
+  }
+
+user_role }|-- user
+user_role }|-- role
+
+job }|-- user
+
+@enduml

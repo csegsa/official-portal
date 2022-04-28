@@ -1,22 +1,41 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 // nodejs library that concatenates strings
 import classnames from 'classnames'
 
 // reactstrap components
 import { Collapse, NavbarBrand, Navbar, NavItem, NavLink, Nav, Container, Button } from 'reactstrap'
+import { auth, signOutOfGoogle } from '../../views/userlogin/Firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 import Logo from '../../assets/img/csegsa/csegsa.webp'
 
 function MainNavbar() {
   const [navbarColor, setNavbarColor] = React.useState('navbar-transparent')
   const [navbarCollapse, setNavbarCollapse] = React.useState(false)
+  const [, setEmail] = React.useState('')
+
+  const [user] = useAuthState(auth)
+  const [authenticated, setAuthenticated] = React.useState(false)
+  const [loginText, setLoginText] = React.useState('Login')
 
   const toggleNavbarCollapse = () => {
     setNavbarCollapse(!navbarCollapse)
     document.documentElement.classList.toggle('nav-open')
   }
+
+  React.useEffect(() => {
+    if (user) {
+      console.log(user)
+      setEmail(user.email)
+      setAuthenticated(true)
+      setLoginText(user.email + ' (Log Out)')
+    } else {
+      setEmail('')
+      setLoginText('Log In')
+    }
+  }, [user])
 
   React.useEffect(() => {
     const updateNavbarColor = () => {
@@ -33,6 +52,13 @@ function MainNavbar() {
       window.removeEventListener('scroll', updateNavbarColor)
     }
   })
+
+  const logout = () => {
+    setAuthenticated(false)
+    signOutOfGoogle()
+    Redirect('/home') // eslint-disable-line
+  }
+
   return (
     <>
       <Navbar className={classnames('fixed-top', navbarColor)} color-on-scroll="300" expand="lg">
@@ -75,15 +101,18 @@ function MainNavbar() {
                   Contact Us
                 </NavLink>
               </NavItem>
-              {/* <NavItem>
-                            <NavLink to="/login" tag={Link}>
-                                Login
-                            </NavLink>
-                        </NavItem> */}
+
               <NavItem>
-                <Button className="btn-round" color="info" to="/login" tag={Link}>
-                  <i className="nc-icon nc-single-02"></i> Login
-                </Button>
+                {!authenticated ? (
+                  <Button className="btn-round" color="info" to="/login" tag={Link}>
+                    <i className="nc-icon nc-spaceship"></i>
+                    {loginText}
+                  </Button>
+                ) : (
+                  <Button className="btn-round" color="info" onClick={logout}>
+                    <i className="nc-icon nc-single-02"></i> {loginText}
+                  </Button>
+                )}
               </NavItem>
             </Nav>
           </Collapse>
