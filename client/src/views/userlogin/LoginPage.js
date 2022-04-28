@@ -82,6 +82,7 @@ function RegisterPage() {
                 <h3 className="title mx-auto">Welcome</h3>
                 <div className="social-line text-center">
                   <Button
+                    id={'google-login-button'}
                     className="btn-neutral btn-just-icon mr-1"
                     color="google"
                     // href="#pablo"
