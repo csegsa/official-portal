@@ -27,12 +27,7 @@ function JobPostings() {
     <>
       <MainNavbar />
       <JobPostingHeader />
-      <Container>
-        <h3>Job Openings</h3>
-        <br />
-        <JobListing />
-        <Link to="/add-jobs" className="btn btn-danger">Add Jobs</Link>
-      </Container>
+      <JobsForm />
       <MainFooter />
     </>
   )

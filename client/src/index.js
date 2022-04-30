@@ -11,6 +11,7 @@ import LoginPage from 'views/userlogin/LoginPage'
 import JobPostings from 'views/jobs/JobPostings'
 import EventsPage from 'views/events/EventsPage'
 import AddEvent from 'views/events/AddEvent'
+import JobForm from "views/jobs/JobForm" ;
 
 ReactDOM.render(
   <BrowserRouter>
@@ -20,7 +21,7 @@ ReactDOM.render(
       <Route path="/events" render={props => <EventsPage {...props} />} />
       <Route path="/add-event" render={props => <AddEvent {...props} />} />
       <Route path="/jobs" render={props => <JobPostings {...props} />} />
-
+      <Route path='/add-jobs' render={props => <JobForm {...props} />} />
       <Redirect to="/home" />
     </Switch>
   </BrowserRouter>,
