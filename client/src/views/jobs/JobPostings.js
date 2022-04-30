@@ -1,27 +1,26 @@
-import React, {useEffect, useState} from "react" ;
+import React, { useEffect, useState } from 'react'
 
 // reactstrap components
-import { Button, Card, CardBody, CardFooter, CardTitle, Container, Row, Col } from "reactstrap"
+import { Button, Card, CardBody, CardFooter, CardTitle, Container, Row, Col } from 'reactstrap'
 
 // core components
-import MainNavbar from "components/Navbars/MainNavbar.js"
-import JobPostingHeader from "components/Headers/JobPostingHeader"
-import MainFooter from "components/Footers/MainFooter" ;
+import MainNavbar from 'components/Navbars/MainNavbar.js'
+import JobPostingHeader from 'components/Headers/JobPostingHeader'
+import MainFooter from 'components/Footers/MainFooter'
 
-import JobsForm from "./AddJobs.js" ;
+import JobsForm from './AddJobs.js'
 import JobListing from './JobListing.js'
-import csegsaApi from "api/csegsaApi.js" ;
-import { Link } from "react-router-dom" ;
+import csegsaApi from 'api/csegsaApi.js'
+import { Link } from 'react-router-dom'
 
 function JobPostings() {
-
-  document.documentElement.classList.remove("nav-open")
+  document.documentElement.classList.remove('nav-open')
   React.useEffect(() => {
-    document.body.classList.add("profile-page")
+    document.body.classList.add('profile-page')
     return function cleanup() {
-      document.body.classList.remove("profile-page")
+      document.body.classList.remove('profile-page')
     }
-  }) ;
+  })
 
   return (
     <>
@@ -31,11 +30,13 @@ function JobPostings() {
         <h3>Job Openings</h3>
         <br />
         <JobListing />
-        <Link to="/add-jobs" className="btn btn-danger">Add Jobs</Link>
+        <Link to="/add-jobs" className="btn btn-danger">
+          Add Jobs
+        </Link>
       </Container>
       <MainFooter />
     </>
   )
 }
 
-export default JobPostings ;
+export default JobPostings
