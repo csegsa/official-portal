@@ -1,24 +1,11 @@
-import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 
-import DateTimePicker from 'react-datetime-picker'
-import {
-  Container,
-  Input,
-  Row,
-  FormGroup,
-  Label,
-  FormText,
-  Form,
-  Button,
-  Col,
-  Card
-} from 'reactstrap'
+import { Card } from 'reactstrap'
 import csegsaApi from 'api/csegsaApi'
 
 const JobListing = () => {
   const [jobs, setJobs] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [, setIsLoading] = useState(true)
 
   useEffect(() => {
     csegsaApi.get('/jobs').then(res => {
@@ -32,7 +19,7 @@ const JobListing = () => {
     <>
       {jobs.map((item, index) => {
         return (
-          <Card className="ml-auto mr-auto">
+          <Card key={index} className="ml-auto mr-auto">
             <div className="card-body">
               <h3 className="card-title ">{item.company_name}</h3>
               <h6 className="card-subtitle mb-2 text-muted">{item.job_title}</h6>
