@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState,useRef} from 'react' ;
+import emailjs from '@emailjs/browser';
 
 // reactstrap components
 import {
@@ -14,6 +15,31 @@ import {
 } from 'reactstrap'
 
 function ContactUsSection() {
+
+  const form = useRef();
+
+  const [toSend, setToSend] = useState({
+    from_name: '',
+    from_email: '',
+    message: '',
+  });
+
+  const handleChange = (e) => {
+    setToSend({ ...toSend, [e.target.name]: e.target.value });
+  };
+
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    console.log(process.env.EMAIL_SERVICE_ID) ;
+    emailjs.send("service_4a1ob33", "template_vk3nieo", toSend ,"ShSakye0AbwjRUTNf")
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+  };
+
   return (
     <>
       <div id={'contact'} className="main">
@@ -22,7 +48,7 @@ function ContactUsSection() {
             <Row>
               <Col className="ml-auto mr-auto" md="8">
                 <h2 className="text-center">Keep in touch?</h2>
-                <Form className="contact-form">
+                <Form ref={form} onSubmit={sendEmail} className="contact-form">
                   <Row>
                     <Col md="6">
                       <label>Name</label>
@@ -32,7 +58,7 @@ function ContactUsSection() {
                             <i className="nc-icon nc-single-02" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Name" type="text" />
+                        <Input placeholder="Name" type="text" name="from_name" value={toSend.from_name} onChange={handleChange}/>
                       </InputGroup>
                     </Col>
                     <Col md="6">
@@ -43,7 +69,7 @@ function ContactUsSection() {
                             <i className="nc-icon nc-email-85" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Email" type="text" />
+                        <Input placeholder="Email" type="text" name="from_email" value={toSend.from_email} onChange={handleChange}/>
                       </InputGroup>
                     </Col>
                   </Row>
@@ -52,6 +78,9 @@ function ContactUsSection() {
                     placeholder="Tell us your thoughts and feelings..."
                     type="textarea"
                     rows="4"
+                    name="message"
+                    value={toSend.message}
+                    onChange={handleChange}
                   />
                   <Row>
                     <Col className="ml-auto mr-auto" md="4">
@@ -70,4 +99,4 @@ function ContactUsSection() {
   )
 }
 
-export default ContactUsSection
+export default ContactUsSection ;
