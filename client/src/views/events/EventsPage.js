@@ -20,7 +20,7 @@ function EventsPage() {
   const [showAddEvent, setShowAddEvent] = React.useState(false)
   document.documentElement.classList.remove('nav-open')
 
-  React.useEffect(() => {
+  function updatePrivilegedOptionVisibility() {
     if (user) {
       console.log('Checking if event can be added')
       console.log(user, loading, error)
@@ -37,7 +37,14 @@ function EventsPage() {
     } else if (error) {
       console.log('Error')
       setShowAddEvent(false)
+    } else {
+      console.log('No user')
+      setShowAddEvent(false)
     }
+  }
+
+  React.useEffect(() => {
+    updatePrivilegedOptionVisibility()
   }, [user, loading, error])
 
   React.useEffect(() => {
