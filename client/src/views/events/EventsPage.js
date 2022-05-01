@@ -14,7 +14,6 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 
 function EventsPage() {
   const [events, setEvents] = React.useState([])
-  const [, setIsloaded] = React.useState(false)
   const [displayEvent, setDisplayEvent] = React.useState(null)
   const [user, loading, error] = useAuthState(auth)
   const [showAddEvent, setShowAddEvent] = React.useState(false)
@@ -32,7 +31,7 @@ function EventsPage() {
         }
       })
     } else if (loading) {
-      console.log('Loading')
+      console.log('auth state Loading')
       setShowAddEvent(false)
     } else if (error) {
       console.log('Error')
@@ -55,17 +54,21 @@ function EventsPage() {
   })
 
   React.useEffect(() => {
-    csegsaApi.get('/events').then(res => {
-      setEvents(res.data)
-      setIsloaded(true)
-    })
+    csegsaApi
+      .get('/events')
+      .then(res => {
+        console.log(res.data)
+        setEvents(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }, [])
 
   const viewEvent = arg => {
     const filterId = arg.event.id
 
     const selectedEvent = events.filter(event => event._id === filterId)
-
     setDisplayEvent(selectedEvent)
   }
 
