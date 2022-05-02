@@ -1,6 +1,6 @@
 import React, {useState,useRef} from 'react' ;
 import emailjs from '@emailjs/browser';
-
+const validateInput = require('./validateInput.js') ;
 // reactstrap components
 import {
   Button,
@@ -12,11 +12,11 @@ import {
   Container,
   Row,
   Col
-} from 'reactstrap'
+} from 'reactstrap' ;
 
 function ContactUsSection() {
 
-  const form = useRef();
+  const form = useRef() ;
 
   const [toSend, setToSend] = useState({
     from_name: '',
@@ -31,13 +31,16 @@ function ContactUsSection() {
 
   const sendEmail = (e) => {
     e.preventDefault();
-    console.log(process.env.EMAIL_SERVICE_ID) ;
+    console.log(toSend) ;
+    console.log(validateInput(toSend)) ;
+    if(validateInput(toSend)) {
     emailjs.send("service_4a1ob33", "template_vk3nieo", toSend ,"ShSakye0AbwjRUTNf")
       .then((result) => {
           console.log(result.text);
       }, (error) => {
           console.log(error.text);
       });
+    }
   };
 
   return (

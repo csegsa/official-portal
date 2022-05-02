@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom'
 
 function EventsPage() {
   const [events, setEvents] = React.useState([])
-  const [, setIsloaded] = React.useState(false)
+  const [isLoaded, setIsloaded] = React.useState(false)
   const [displayEvent, setDisplayEvent] = React.useState(null)
 
   document.documentElement.classList.remove('nav-open')
