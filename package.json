@@ -8,6 +8,9 @@
     "npm": "=8.3.1",
     "node": "=16.14.0"
   },
+  "jest": {
+    "verbose": true
+  },
   "scripts": {
     "test": "cd specs &&  npm test",
     "start": "node server/index.js",
@@ -26,6 +29,7 @@
   },
   "homepage": "https://github.com/abhinand5ai/official-portal#readme",
   "dependencies": {
+    "@emailjs/browser": "^3.6.2",
     "body-parser": "^1.19.2",
     "chai": "^4.3.6",
     "chromedriver": "^99.0.0",
@@ -44,6 +48,7 @@
     "eslint": "^8.14.0",
     "eslint-config-google": "^0.14.0",
     "install": "^0.13.0",
+    "jest": "^28.0.3",
     "npm": "^8.5.5"
   }
 }
