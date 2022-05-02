@@ -15,6 +15,7 @@
     "dotenv": "^16.0.0",
     "es-abstract": "^1.19.1",
     "fast-glob": "^3.2.11",
+    "firebase": "^9.7.0",
     "lodash": "^4.17.21",
     "moment": "2.29.1",
     "node-sass": "^7.0.1",

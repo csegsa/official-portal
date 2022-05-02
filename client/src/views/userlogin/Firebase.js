@@ -2,16 +2,14 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyAImMGEfzCovzulnbeoEGJShh5rB02a8l8',
-  authDomain: 'csegsaauth.firebaseapp.com',
-  projectId: 'csegsaauth',
-  storageBucket: 'csegsaauth.appspot.com',
-  messagingSenderId: '449169508463',
-  appId: '1:449169508463:web:75e42d909f284413aee59a',
-  measurementId: 'G-X0W442WL6Y'
+  apiKey: 'AIzaSyDeCQ1Mxk-mJKhxFkffRgGsAeS7b7mlr2k',
+  authDomain: 'csegsa-portal.firebaseapp.com',
+  projectId: 'csegsa-portal',
+  storageBucket: 'csegsa-portal.appspot.com',
+  messagingSenderId: '373600202068',
+  appId: '1:373600202068:web:9be282b79ad32b46316cc1',
+  measurementId: 'G-YKV2Y4QGW7'
 }
 
 // Initialize Firebase
