@@ -6,7 +6,7 @@ export default async function (req, res, next) {
         const firebaseToken = req.headers.authorization?.split(" ")[1];
         let firebaseUser;
         if (firebaseToken) {
-            console.log("firebaseToken", firebaseToken);
+            // console.log("firebaseToken", firebaseToken);
             firebaseUser = await firebaseAdmin.auth.verifyIdToken(firebaseToken);
         }
         if (!firebaseUser) {
