@@ -7,25 +7,6 @@ import DateTimePicker from 'react-datetime-picker'
 import { Container, Input, Row, FormGroup, Label, Form, Button, Col } from 'reactstrap'
 import csegsaApi from 'api/csegsaApi'
 import { auth } from '../userlogin/Firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
-
-async function verifyUser(user) {
-  console.log(user)
-  if (!user) return false
-  return csegsaApi
-    .get('/roles' + '?user=' + user.email)
-    .then(res => {
-      console.log(res.data)
-      if (res.data.role === 'admin') {
-        return true
-      }
-      return false
-    })
-    .catch(err => {
-      console.log(err)
-      return false
-    })
-}
 
 const AddItem = () => {
   const [startTime, onStartTimeChange] = useState(new Date())
@@ -33,39 +14,40 @@ const AddItem = () => {
   const [eventName, setEventName] = useState('')
   const [eventDescription, setEventDescription] = useState('')
   const [eventLocation, setEventLocation] = useState('')
-  const [user, ,] = useAuthState(auth)
   const history = useHistory()
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    console.log(startTime)
-    console.log(endTime)
+    console.log(startTime.toISOString())
+    console.log(endTime.toISOString())
     console.log(eventName)
-    verifyUser(user).then(res => {
-      if (res) {
-        csegsaApi
-          .post('/events', {
-            startTime: startTime,
-            endTime: endTime,
-            eventName: eventName,
-            eventDescription: eventDescription,
-            eventLocation: eventLocation
-          })
-          .then(res => {
-            console.log(res)
-            history.push('/events')
-            console.log('Event added and redirected to events page')
-          })
-          .catch(err => {
-            console.log(err)
-            console.log('Error adding event')
-            alert('Error adding event')
-          })
-      } else {
-        console.log('User is not an admin')
-        alert('User is not an admin')
-      }
-    })
+    const token = await auth.currentUser.getIdToken()
+    csegsaApi
+      .post(
+        '/events',
+        {
+          start_time: startTime.toISOString(),
+          end_time: endTime.toISOString(),
+          name: eventName,
+          description: eventDescription,
+          location: eventLocation
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
+      .then(res => {
+        console.log(res)
+        history.push('/events')
+        console.log('Event added and redirected to events page')
+      })
+      .catch(err => {
+        console.log(err)
+        console.log('Error adding event')
+        alert('Error adding event')
+      })
   }
 
   return (

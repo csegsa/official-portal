@@ -5,11 +5,12 @@ import {
     createEvent,
 
 } from "../controllers/events.js";
+import authenticate from '../middleware/authenticate.js';
 
 const router = express.Router();
 
 router.get("/", getEvents);
 
-router.post("/", createEvent);
+router.post("/", authenticate, createEvent);
 
 export default router;

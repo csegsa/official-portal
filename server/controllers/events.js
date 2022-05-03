@@ -41,9 +41,10 @@ export const createEvent = async (req, res) => {
     event.location = req.body.location;
     try {
         const savedEvent = await event.save();
-        res.json(savedEvent);
+        res.status(201).json(savedEvent).send();
         console.log(`Event ${savedEvent._id} created successfully`);
     } catch (err) {
+        res.statusCode = 400
         res.send(err);
         console.log(`Error creating event ${err}`);
     }
