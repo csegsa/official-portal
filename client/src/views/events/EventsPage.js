@@ -19,17 +19,20 @@ function EventsPage() {
   const [showAddEvent, setShowAddEvent] = React.useState(false)
   document.documentElement.classList.remove('nav-open')
 
-  function updatePrivilegedOptionVisibility() {
+  async function updatePrivilegedOptionVisibility() {
     if (user) {
       console.log('Checking if event can be added')
       console.log(user, loading, error)
-      csegsaApi.get('/roles' + '?user=' + user.email).then(res => {
-        console.log(res.data)
-        if (res.data.role === 'admin') {
-          setShowAddEvent(true)
-          console.log('showAddEvent: ' + showAddEvent)
-        }
-      })
+      const token = await auth.currentUser.getIdToken()
+      csegsaApi
+        .get('/roles' + '?email=' + user.email, { headers: { authorization: 'Bearer ' + token } })
+        .then(res => {
+          console.log(res.data)
+          if (res.data.role === 'admin') {
+            setShowAddEvent(true)
+            console.log('showAddEvent: ' + showAddEvent)
+          }
+        })
     } else if (loading) {
       console.log('auth state Loading')
       setShowAddEvent(false)
@@ -42,7 +45,7 @@ function EventsPage() {
     }
   }
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
     updatePrivilegedOptionVisibility()
   }, [user, loading, error])
 

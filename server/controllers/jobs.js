@@ -11,27 +11,6 @@ export const getJobs = (req, res) => {
 
 };
 
-// export const getEventById = (req, res) => {
-//     // TODO: Implement
-//     Event.findById(req.params.eventId, (err, event) => {
-//         if (err) {
-//             res.send(err);
-//             console.log(`Error fetching event: ${err}`);
-//         }
-//         res.json(event);
-//     });
-// };
-// export const getUpcomingEvents = (req, res) => {
-//     // TODO: get upcoming events
-//     Event.find({}, (err, events) => {
-//         if (err) {
-//             res.send(err);
-//             console.log(`Error fetching events: ${err}`);
-//         }
-//         res.json(events);
-//     });
-// };
-
 export const createJob = async (req, res) => {
     const job = new Job();
     job.company_name = req.body.company_name;
@@ -45,7 +24,7 @@ export const createJob = async (req, res) => {
         res.json(savedJob);
         console.log(`Job ${savedJob._id} created successfully`);
     } catch (err) {
-        res.send(err);
+        res.status(400).send(err);
         console.log(`Error creating job ${err}`);
     }
 };
