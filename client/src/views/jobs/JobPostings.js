@@ -10,6 +10,7 @@ import MainFooter from 'components/Footers/MainFooter'
 
 import JobListing from './JobListing.js'
 import { Link } from 'react-router-dom'
+import csegsaApi from 'api/csegsaApi.js'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
