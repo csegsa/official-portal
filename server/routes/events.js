@@ -3,7 +3,8 @@ import express from "express";
 import {
     getEventById,
     getEvents,
-    createEvent, deleteEvent
+    createEvent, deleteEvent,
+    addAttendee
 
 } from '../controllers/events.js';
 import {authenticate} from '../middleware/authenticate.js';
@@ -14,5 +15,6 @@ router.get("/", getEvents);
 router.post("/", authenticate, createEvent);
 router.post("/remove/:id", authenticate, deleteEvent);
 router.get("/:id", getEventById);
+router.post("/addAttendee", authenticate, addAttendee)
 
 export default router;
