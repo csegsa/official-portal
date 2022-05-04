@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+
+package "Client/Browser" {
+
+  [Browser React Application] as client
+}
+
+'node "Other Groups" {
+'  FTP - [Second Component]
+'  [First Component] --> FTP
+'}
+
+component "Web Server" {
+  [Node Express Server] as server
+}
+
+cloud [FireBase] as firebase{
+
+  [UserAuth] as auth
+}
+
+database "MongoDB" as db{
+  [Roles] as mongo
+  [Events] as events
+  [Jobs] as jobs
+}
+
+
+client <--> server
+firebase <-> client
+db <-> server
+
+server -> firebase
+firebase --> server
+
+@enduml

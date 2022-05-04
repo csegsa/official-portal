@@ -1,35 +1,38 @@
 import firebaseAdmin from "../services/firebase.js";
+import { isAdmin} from '../controllers/common.js';
 
-export default async function (req, res, next) {
+export  async function authenticate (req, res, next) {
     try {
+        // console.log("Authenticating...");
         const firebaseToken = req.headers.authorization?.split(" ")[1];
-
         let firebaseUser;
         if (firebaseToken) {
+            // console.log("firebaseToken", firebaseToken);
             firebaseUser = await firebaseAdmin.auth.verifyIdToken(firebaseToken);
         }
-
         if (!firebaseUser) {
-            // Unauthorized
             return res.sendStatus(401);
         }
-
-        const usersCollection = req.app.locals.db.collection("user");
-
-        const user = await usersCollection.findOne({
-            firebaseId: firebaseUser.user_id
-        });
-
-        if (!user) {
-            // Unauthorized
-            return res.sendStatus(401);
-        }
-
-        req.user = user;
-
+        req.user = firebaseUser;
+        // console.log("Authenticated");
         next();
     } catch (err) {
-        //Unauthorized
+        res.sendStatus(401);
+    }
+}
+
+export async function authorizeRole(req, res, next) {
+    try{
+        // console.log("Authorizing ...");
+        const isEligible = await isAdmin(req.user.uid);
+        if(isEligible){
+            next();
+        }else{
+            res.sendStatus(401).message("Unauthorized");
+        }
+        // console.log("Authorized");
+    }
+    catch(err){
         res.sendStatus(401);
     }
 }
