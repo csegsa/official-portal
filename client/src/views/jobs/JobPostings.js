@@ -10,7 +10,7 @@ import MainFooter from 'components/Footers/MainFooter'
 
 import JobListing from './JobListing.js'
 import { Link } from 'react-router-dom'
-import csegsaApi from 'api/csegsaApi.js'
+import checkAdminRole from 'utils/CheckAdminRole'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
@@ -19,30 +19,19 @@ function JobPostings() {
   const [showAddJob, setShowAddJob] = React.useState(false)
   document.documentElement.classList.remove('nav-open')
 
-  function updatePrivilegedOptionVisibility() {
+  async function updatePrivilegedOptionVisibility() {
     if (user) {
-      console.log('Checking if job can be added')
-      console.log(user, loading, error)
-      csegsaApi.get('/roles' + '?user=' + user.email).then(res => {
-        console.log(res.data)
-        if (res.data.role === 'admin') {
-          setShowAddJob(true)
-          console.log('showAddJob: ' + showAddJob)
-        }
-      })
-    } else if (loading) {
-      console.log('auth state Loading')
-      setShowAddJob(false)
-    } else if (error) {
-      console.log('Error')
-      setShowAddJob(false)
-    } else {
-      console.log('No user')
-      setShowAddJob(false)
+      const isAdmin = await checkAdminRole(user, loading, error, auth)
+      if (isAdmin) {
+        setShowAddJob(true)
+      } else {
+        setShowAddJob(false)
+      }
+      console.log('showAddJob: ' + showAddJob)
     }
   }
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
     updatePrivilegedOptionVisibility()
   }, [user, loading, error])
 
