@@ -12,6 +12,17 @@ export const getEvents = async (req, res) => {
 
 };
 
+export const getEventById = async (req, res) => {
+    try{
+        console.log(`Fetching Event with id ${req.params.id}`);
+        const event = await Event.findById(req.params.id);
+        res.json(event).status(200);
+    }
+    catch(err){
+        res.json({message: err}).status(500);
+    }
+};
+
 function constructEventObject(req) {
     const event = new Event();
     event.name = req.body.name;
