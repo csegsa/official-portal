@@ -9,6 +9,7 @@ import JobForm from 'views/jobs/JobForm'
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import '@testing-library/jest-dom/extend-expect';
+import testRoutes from 'utils/TestRoute';
 
 jest.mock('views/homepage/LandingPage');
 jest.mock('views/userlogin/LoginPage');
@@ -18,91 +19,10 @@ jest.mock('views/events/AddEvent');
 jest.mock('views/jobs/JobForm');
 
 describe("Tests for App Router", () => {
-    test("Should render LandingPage on default route", () => {
-        // Arrange
-        (LandingPage).mockImplementation(() => <div>LandingPageMock</div>);
-
-        // Act
-        render(
-            <MemoryRouter>
-                <App />
-            </MemoryRouter>
-        );
-
-        // Assert
-        expect(screen.getByText("LandingPageMock")).toBeInTheDocument();
-    });
-
-    test("Should render LoginPage for login route", () => {
-        // Arrange
-        (LoginPage).mockImplementation(() => <div>LoginPageMock</div>);
-
-        // Act
-        render(
-            <MemoryRouter initialEntries={['/login']}>
-                <App />
-            </MemoryRouter>
-        );
-
-        // Assert
-        expect(screen.getByText("LoginPageMock")).toBeInTheDocument();
-    });
-
-    test("Should render EventsPage for events route", () => {
-        // Arrange
-        (EventsPage).mockImplementation(() => <div>EventsPageMock</div>);
-
-        // Act
-        render(
-            <MemoryRouter initialEntries={['/events']}>
-                <App />
-            </MemoryRouter>
-        );
-
-        // Assert
-        expect(screen.getByText("EventsPageMock")).toBeInTheDocument();
-    });
-
-    test("Should render AddEvent for add-event route", () => {
-        // Arrange
-        (AddEvent).mockImplementation(() => <div>AddEventMock</div>);
-
-        // Act
-        render(
-            <MemoryRouter initialEntries={['/add-event']}>
-                <App />
-            </MemoryRouter>
-        );
-
-        // Assert
-        expect(screen.getByText("AddEventMock")).toBeInTheDocument();
-    });
-    test("Should render JobPostings for jobs route", () => {
-        // Arrange
-        (JobPostings).mockImplementation(() => <div>JobPostingsMock</div>);
-
-        // Act
-        render(
-            <MemoryRouter initialEntries={['/jobs']}>
-                <App />
-            </MemoryRouter>
-        );
-
-        // Assert
-        expect(screen.getByText("JobPostingsMock")).toBeInTheDocument();
-    });
-    test("Should render JobForm for add-jobs route", () => {
-        // Arrange
-        (JobForm).mockImplementation(() => <div>JobFormMock</div>);
-
-        // Act
-        render(
-            <MemoryRouter initialEntries={['/add-jobs']}>
-                <App />
-            </MemoryRouter>
-        );
-
-        // Assert
-        expect(screen.getByText("JobFormMock")).toBeInTheDocument();
-    });
+    testRoutes(LandingPage, "LandingPageMock", '/')
+    testRoutes(LoginPage, "LoginPageMock", '/login')
+    testRoutes(EventsPage, "EventsPageMock", '/events')
+    testRoutes(AddEvent, "AddEventMock", '/add-event')
+    testRoutes(JobPostings, "JobPostingsMock", '/jobs')
+    testRoutes(JobForm, "JobFormMock", '/add-jobs')
 });
