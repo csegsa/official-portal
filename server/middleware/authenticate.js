@@ -1,8 +1,9 @@
 import firebaseAdmin from "../services/firebase.js";
+import { isAdmin} from '../controllers/common.js';
 
-export default async function (req, res, next) {
+export  async function authenticate (req, res, next) {
     try {
-        console.log("Authenticating...");
+        // console.log("Authenticating...");
         const firebaseToken = req.headers.authorization?.split(" ")[1];
         let firebaseUser;
         if (firebaseToken) {
@@ -10,13 +11,28 @@ export default async function (req, res, next) {
             firebaseUser = await firebaseAdmin.auth.verifyIdToken(firebaseToken);
         }
         if (!firebaseUser) {
-            // Unauthorized
             return res.sendStatus(401);
         }
         req.user = firebaseUser;
-        console.log("Authenticated");
+        // console.log("Authenticated");
         next();
     } catch (err) {
+        res.sendStatus(401);
+    }
+}
+
+export async function authorizeRole(req, res, next) {
+    try{
+        // console.log("Authorizing ...");
+        const isEligible = await isAdmin(req.user.uid);
+        if(isEligible){
+            next();
+        }else{
+            res.sendStatus(401).message("Unauthorized");
+        }
+        // console.log("Authorized");
+    }
+    catch(err){
         res.sendStatus(401);
     }
 }
