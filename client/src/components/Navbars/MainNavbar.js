@@ -14,7 +14,6 @@ import Logo from '../../assets/img/csegsa/csegsa.webp'
 function MainNavbar() {
   const [navbarColor, setNavbarColor] = React.useState('navbar-transparent')
   const [navbarCollapse, setNavbarCollapse] = React.useState(false)
-  const [email, setEmail] = React.useState('')
 
   const [isAdmin, setAdmin] = React.useState(false)
   const [user] = useAuthState(auth)
@@ -27,9 +26,10 @@ function MainNavbar() {
   }
 
   async function getAdmin() {
-    console.log("making api call to check admin")
-      const token = await auth.currentUser.getIdToken()
-      csegsaApi.get('/roles' + '?email=' + user.email, { headers: { authorization: 'Bearer ' + token } })
+    console.log('making api call to check admin')
+    const token = await auth.currentUser.getIdToken()
+    csegsaApi
+      .get('/roles' + '?email=' + user.email, { headers: { authorization: 'Bearer ' + token } })
       .then(res => {
         console.log(res.data)
         if (res.data.role === 'admin') {
@@ -51,11 +51,9 @@ function MainNavbar() {
   React.useEffect(() => {
     if (user) {
       console.log(user)
-      setEmail(user.email)
       setAuthenticated(true)
       setLoginText(user.email + ' (Log Out)')
     } else {
-      setEmail('')
       setLoginText('Log In')
     }
   }, [user])
@@ -124,14 +122,13 @@ function MainNavbar() {
                   Contact Us
                 </NavLink>
               </NavItem>
-              {isAdmin &&
+              {isAdmin && (
                 <NavItem>
                   <NavLink to="/admin" tag={Link}>
                     Admin Portal
                   </NavLink>
                 </NavItem>
-              }
-              
+              )}
 
               <NavItem>
                 {!authenticated ? (

@@ -13,6 +13,10 @@ export const deleteRoleByEmail = async (email) => {
     return Roles.deleteOne({ email: email });
 };
 
+export const deleteRoleById = async (id) => {
+    return Roles.deleteOne({ _id: id });
+};
+
 export const storeEvent = async (event) => {
   return event.save();
 };
