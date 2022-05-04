@@ -61,10 +61,11 @@ function JobPostings() {
         <h3>Job Openings</h3>
         <br />
         <JobListing />
-        {showAddJob && 
-        <Link to="/add-jobs" className="btn btn-danger">
-          Add Jobs
-        </Link>}
+        {showAddJob && (
+          <Link to="/add-jobs" className="btn btn-danger">
+            Add Jobs
+          </Link>
+        )}
       </Container>
       <MainFooter />
     </>

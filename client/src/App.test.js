@@ -30,7 +30,7 @@ describe("Tests for App Router", () => {
         );
 
         // Assert
-        expect(screen.getByText("HomePageMock")).toBeInTheDocument();
+        expect(screen.getByText("LandingPageMock")).toBeInTheDocument();
     });
 
     test("Should render LoginPage for login route", () => {
