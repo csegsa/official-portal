@@ -6,6 +6,7 @@ import React from 'react'
 import DateTimePicker from 'react-datetime-picker'
 import { Container, Input, Row, FormGroup, Label, Form, Button, Col } from 'reactstrap'
 import csegsaApi from 'api/csegsaApi'
+import { auth } from '../userlogin/Firebase'
 
 const AddItem = () => {
   const [startTime, onStartTimeChange] = useState(new Date())
@@ -15,25 +16,37 @@ const AddItem = () => {
   const [eventLocation, setEventLocation] = useState('')
   const history = useHistory()
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    console.log(startTime)
-    console.log(endTime)
+    console.log(startTime.toISOString())
+    console.log(endTime.toISOString())
     console.log(eventName)
+    const token = await auth.currentUser.getIdToken()
     csegsaApi
-      .post('/events', {
-        name: eventName,
-        location: eventLocation,
-        description: eventDescription,
-        start_time: startTime,
-        end_time: endTime
-      })
+      .post(
+        '/events',
+        {
+          start_time: startTime.toISOString(),
+          end_time: endTime.toISOString(),
+          name: eventName,
+          description: eventDescription,
+          location: eventLocation
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
       .then(res => {
         console.log(res)
         history.push('/events')
+        console.log('Event added and redirected to events page')
       })
       .catch(err => {
         console.log(err)
+        console.log('Error adding event')
+        alert('Error adding event')
       })
   }
 

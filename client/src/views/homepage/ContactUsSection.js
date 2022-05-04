@@ -1,6 +1,7 @@
 import React, {useState,useRef} from 'react' ;
 import emailjs from '@emailjs/browser';
 const validateInput = require('./validateInput.js') ;
+
 // reactstrap components
 import {
   Button,
@@ -15,19 +16,19 @@ import {
 } from 'reactstrap' ;
 
 function ContactUsSection() {
+  
+  const form = useRef()
 
-  const form = useRef() ;
 
   const [toSend, setToSend] = useState({
     from_name: '',
     from_email: '',
-    message: '',
-  });
+    message: ''
+  })
 
-  const handleChange = (e) => {
-    setToSend({ ...toSend, [e.target.name]: e.target.value });
-  };
-
+  const handleChange = e => {
+    setToSend({ ...toSend, [e.target.name]: e.target.value })
+  }
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -61,7 +62,13 @@ function ContactUsSection() {
                             <i className="nc-icon nc-single-02" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Name" type="text" name="from_name" value={toSend.from_name} onChange={handleChange}/>
+                        <Input
+                          placeholder="Name"
+                          type="text"
+                          name="from_name"
+                          value={toSend.from_name}
+                          onChange={handleChange}
+                        />
                       </InputGroup>
                     </Col>
                     <Col md="6">
@@ -72,7 +79,13 @@ function ContactUsSection() {
                             <i className="nc-icon nc-email-85" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Email" type="text" name="from_email" value={toSend.from_email} onChange={handleChange}/>
+                        <Input
+                          placeholder="Email"
+                          type="text"
+                          name="from_email"
+                          value={toSend.from_email}
+                          onChange={handleChange}
+                        />
                       </InputGroup>
                     </Col>
                   </Row>
@@ -102,4 +115,4 @@ function ContactUsSection() {
   )
 }
 
-export default ContactUsSection ;
+export default ContactUsSection

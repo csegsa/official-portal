@@ -10,7 +10,6 @@ entity "User" as user {
   *user_id : number <<generated>>
   --
   *username : text
-  *password : text
   *email : text
   *first_name : text
   *last_name : text
