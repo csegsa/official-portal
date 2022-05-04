@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Card } from 'reactstrap'
+import { Container, Row, Col, Card, Form, Button } from 'reactstrap'
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from '@fullcalendar/interaction' // needed
@@ -18,6 +18,31 @@ function EventsPage() {
   const [user, loading, error] = useAuthState(auth)
   const [showAddEvent, setShowAddEvent] = React.useState(false)
   document.documentElement.classList.remove('nav-open')
+
+  const handleSubmit = async(event_id) => {
+    const token = await auth.currentUser.getIdToken() ;
+    console.log(token)
+    csegsaApi
+      .post(
+        '/events/addAttendee',
+        {
+          event_id:event_id,
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+        console.log('Error adding event')
+        alert('Error adding event')
+      })
+  }
 
   async function updatePrivilegedOptionVisibility() {
     if (user) {
@@ -107,9 +132,7 @@ function EventsPage() {
           <p className="card-text">
             <b>Time: {displayEvent[0].start_time}</b>
           </p>
-          <a href="#" className="btn btn-success">
-            RSVP
-          </a>
+          <Button className="btn btn-success" onClick={() => {handleSubmit(displayEvent[0]._id)}}>RSVP</Button>
         </div>
       </Card>
     )
