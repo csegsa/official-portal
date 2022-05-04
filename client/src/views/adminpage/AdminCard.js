@@ -6,58 +6,35 @@ import FormModal from './FormModal'
 import csegsaApi from 'api/csegsaApi.js'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-
-const admins = [
-  {
-    'src' : "https://picsum.photos/318/180",
-    'description': "Card image cap",
-    'name': "Farabi",
-    'role': "client",
-    'email': "farabi1@tamu.edu"
-  },
-  {
-    'src' : "https://picsum.photos/318/180",
-    'description': "Card image cap",
-    'name': "Farabi",
-    'role': "client",
-    'email': "farabi2@tamu.edu"
-  },
-  {
-    'src' : "https://picsum.photos/318/180",
-    'description': "Card image cap",
-    'name': "Farabi",
-    'role': "client",
-    'email': "farabi3@tamu.edu"
-  }
-]
+import {getRoles} from './helper'
 
 function AdminCard() {
   const [input, setInput] = useState([]);
   const [user, loading, error] = useAuthState(auth)
 
-  // useEffect(() => {
-  //   if (input.length === 0) {
-  //     console.log("reseting input")
-  //     setInput(admins)
-  //   }
-  // }, []) 
-
-  React.useEffect(() => {
-    csegsaApi
-      .get('/events')
+  async function deleteRole(email) {
+    console.log("making api call to check admin")
+      const token = await auth.currentUser.getIdToken()
+      csegsaApi.delete('/roles', {
+        email: email
+      }, { headers: { authorization: 'Bearer ' + token } })
       .then(res => {
         console.log(res.data)
-        setInput(res.data)
+        setInput(input.filter(item => item.email !== email));
       })
-      .catch(err => {
-        console.log(err)
-      })
-  }, [])
+  }
 
-  const removeAdmin = (email) => {
+  React.useEffect(async () => {
+    if (user) {
+      await getRoles(auth, csegsaApi, setInput)
+    }
+  }, [user])
+
+  const removeAdmin = async (email) => {
     console.log("Removing " + email)
     // const updated = [...input];
-    setInput(input.filter(item => item.email !== email));
+    // setInput(input.filter(item => item.email !== email));
+    await deleteRole(email)
   }
 
   return (
@@ -73,7 +50,7 @@ function AdminCard() {
               />
               <CardBody>
                 <CardTitle tag="h5">
-                  {admin.name}
+                  {admin.email}
                 </CardTitle>
                 <CardSubtitle
                   className="mb-2 text-muted"
@@ -81,9 +58,9 @@ function AdminCard() {
                 >
                   {admin.role}
                 </CardSubtitle>
-                <CardText>
+                {/* <CardText>
                   {admin.email}
-                </CardText>
+                </CardText> */}
                 <Button color="danger" outline onClick={() => removeAdmin(admin.email)}>
                   Remove
                 </Button>

@@ -26,16 +26,25 @@ function MainNavbar() {
     document.documentElement.classList.toggle('nav-open')
   }
 
-  React.useEffect(() => {
-    if (user) {
-      console.log("making api call to check admin")
-      csegsaApi.get('/roles' + '?email=' + user.email).then(res => {
+  async function getAdmin() {
+    console.log("making api call to check admin")
+      const token = await auth.currentUser.getIdToken()
+      csegsaApi.get('/roles' + '?email=' + user.email, { headers: { authorization: 'Bearer ' + token } })
+      .then(res => {
         console.log(res.data)
         if (res.data.role === 'admin') {
           setAdmin(true)
-          // console.log('showAddEvent: ' + showAddEvent)
         }
       })
+  }
+
+  React.useEffect(() => {
+    if (user) {
+      getAdmin()
+    } else {
+      if (isAdmin) {
+        setAdmin(false)
+      }
     }
   }, [])
 

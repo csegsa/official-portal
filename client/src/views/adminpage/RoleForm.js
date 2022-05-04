@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { auth } from '../../views/userlogin/Firebase'
+import csegsaApi from 'api/csegsaApi.js'
+import {getRoles} from './helper'
 
 const RoleForm = ({setInput}) => {
     const [name, setName] = useState("");
@@ -21,21 +24,29 @@ const RoleForm = ({setInput}) => {
         }
       ]
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("submitting")
         if (name === '' || role === '' || email === '') {
           return
         }
-    
-        const admins = [...input]
-        admins.push({
-          'name': name,
-          'role': role,
-          'email': email
-        })
-    
-        console.log(admins)
-        setInput(admins)
-      }
+        console.log("inserting new role")
+        await addRole()
+        await getRoles(auth, csegsaApi, setInput)
+    }
+
+    async function addRole() {
+        console.log("making api call to add admin")
+          const token = await auth.currentUser.getIdToken()
+          csegsaApi.post('/roles', {
+            'email': email,
+            'description': name,
+            'role': role
+          }, { headers: { authorization: 'Bearer ' + token } })
+          .then(res => {
+            console.log(res.data)
+          })
+    }
 
     return (
         <>
