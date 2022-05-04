@@ -133,6 +133,7 @@ function EventsPage() {
             <b>Time: {displayEvent[0].start_time}</b>
           </p>
           <Button className="btn btn-success" onClick={() => {handleSubmit(displayEvent[0]._id)}}>RSVP</Button>
+          <Link to={`/view-attendees/${displayEvent[0]._id}`}>View Attendees</Link>
         </div>
       </Card>
     )

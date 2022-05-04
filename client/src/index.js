@@ -21,7 +21,7 @@ ReactDOM.render(
       <Route path="/login" render={props => <LoginPage {...props} />} />
       <Route path="/events" render={props => <EventsPage {...props} />} />
       <Route path="/add-event" render={props => <AddEvent {...props} />} />
-      <Route path="/view-attendees" render={props => <ViewAttendees {...props} />} />
+      <Route path="/view-attendees/:event_id" render={props => <ViewAttendees {...props} />} />
       <Route path="/jobs" render={props => <JobPostings {...props} />} />
       <Route path="/add-jobs" render={props => <JobForm {...props} />} />
       <Redirect to="/home" />
