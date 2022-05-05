@@ -8,7 +8,7 @@ import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import {getRoles} from './helper'
 
-function AdminCard() {
+const AdminCard = () => {
   const [input, setInput] = useState([]);
   const [user, loading, error] = useAuthState(auth)
   const [reload, setReload] = useState(false);

@@ -13,7 +13,7 @@ import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import checkAdminRole from 'utils/CheckAdminRole'
 
-function EventsPage() {
+const EventsPage = () => {
   const [events, setEvents] = React.useState([])
   const [displayEvent, setDisplayEvent] = React.useState(null)
   const [user, loading, error] = useAuthState(auth)

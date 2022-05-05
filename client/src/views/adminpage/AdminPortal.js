@@ -11,7 +11,7 @@ import { auth } from '../../views/userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import csegsaApi from 'api/csegsaApi.js'
 
-function AdminPortal() {
+const AdminPortal = () => {
     document.documentElement.classList.remove('nav-open')
     React.useEffect(() => {
       document.body.classList.add('profile-page')
