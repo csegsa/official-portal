@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import { CardGroup, Card, CardImg, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap'
+import { useEffect } from 'react';
+import { CardGroup, Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import FormModal from './FormModal'
 import csegsaApi from 'api/csegsaApi.js'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { getRoles } from './helper'
+import {getRoles} from './helper'
 
-function AdminCard() {
-  const [input, setInput] = useState([])
-  const [user, ,] = useAuthState(auth)
+const AdminCard = () => {
+  const [input, setInput] = useState([]);
+  const [user, loading, error] = useAuthState(auth)
+  const [reload, setReload] = useState(false);
 
   async function deleteRole(id) {
     console.log('making api call to check admin')
@@ -26,6 +29,14 @@ function AdminCard() {
       await getRoles(auth, csegsaApi, setInput)
     }
   }, [user])
+
+  React.useEffect(async () => {
+    if (reload) {
+      console.log("supposed to reload now...")
+      await getRoles(auth, csegsaApi, setInput)
+      setReload(false)
+    }
+  }, [reload])
 
   const removeRole = async id => {
     console.log('Removing ' + id)
@@ -54,7 +65,10 @@ function AdminCard() {
         ))}
       </CardGroup>
 
-      <FormModal setInput={setInput} />
+      <FormModal 
+        setInput={setInput}
+        setReload={setReload}
+      />
     </>
   )
 }
