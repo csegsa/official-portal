@@ -24,10 +24,11 @@ export  async function authenticate (req, res, next) {
 export async function authorizeRole(req, res, next) {
     try{
         // console.log("Authorizing ...");
-        const isEligible = await isAdmin(req.user.uid);
+        const isEligible = await isAdmin(req.user.email);
         if(isEligible){
             next();
         }else{
+            console.log(`User ${req.user.email} is not authorized`);
             res.sendStatus(401).message("Unauthorized");
         }
         // console.log("Authorized");

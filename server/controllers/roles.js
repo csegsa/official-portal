@@ -1,5 +1,5 @@
 import Roles from '../models/roles.js';
-import {getRoleByEmail, deleteRoleByEmail} from '../services/database.js';
+import {getRoleByEmail, deleteRoleById} from '../services/database.js';
 
 export const getRolesByEmail = (req, res) => {
   console.log(req.query)
@@ -43,7 +43,7 @@ export const createRole = async (req, res) => {
 export const deleteRole = async (req, res) => {
 
   try{
-    const role = await deleteRoleByEmail(req.body.email);
+    const role = await deleteRoleById(req.params.id);
     if(role.deletedCount > 0) {
       console.log(role);
       res.status(200).send(role);

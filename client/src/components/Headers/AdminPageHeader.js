@@ -3,21 +3,9 @@ import React from 'react'
 // reactstrap components
 import { Container } from 'reactstrap'
 // core components
+import { prepView } from './EventPageHeader'
 
-export function prepView(pageHeader) {
-  if (window.innerWidth < 991) {
-    const updateScroll = () => {
-      const windowScrollTop = window.pageYOffset / 3
-      pageHeader.current.style.transform = 'translate3d(0,' + windowScrollTop + 'px,0)'
-    }
-    window.addEventListener('scroll', updateScroll)
-    return function cleanup() {
-      window.removeEventListener('scroll', updateScroll)
-    }
-  }
-}
-
-function EventPageHeader() {
+const AdminPageHeader = () => {
   const pageHeader = React.createRef()
 
   React.useEffect(() => {
@@ -37,7 +25,7 @@ function EventPageHeader() {
         <div className="filter" />
         <Container>
           <div className="motto text-center">
-            <h1>Events</h1>
+            <h1>Admin Portal</h1>
           </div>
         </Container>
       </div>
@@ -45,4 +33,4 @@ function EventPageHeader() {
   )
 }
 
-export default EventPageHeader
+export default AdminPageHeader

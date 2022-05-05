@@ -22,17 +22,15 @@ function JobPostings() {
   async function updatePrivilegedOptionVisibility() {
     if (user) {
       const isAdmin = await checkAdminRole(user, loading, error, auth)
-      if (isAdmin) {
-        setShowAddJob(true)
-      } else {
-        setShowAddJob(false)
-      }
-      console.log('showAddJob: ' + showAddJob)
+      setShowAddJob(isAdmin)
+    } else {
+      setShowAddJob(false)
     }
+    console.log('showAddJob: ' + showAddJob)
   }
 
   React.useEffect(async () => {
-    updatePrivilegedOptionVisibility()
+    await updatePrivilegedOptionVisibility()
   }, [user, loading, error])
 
   React.useEffect(() => {

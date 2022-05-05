@@ -37,7 +37,7 @@ function MainFooter() {
                                             href="https://www.creative-tim.com?ref=pkr-footer"
                                             target="_blank"
                                         >
-                                            <i className="fa fa-twitter fa-2x" />
+                                            <i className="fa fa-facebook fa-2x" style={{color:"#500000"}}/>
                                         </a>
                                     </span>
                                     <span style={{marginRight:"20px"}}>
@@ -45,7 +45,7 @@ function MainFooter() {
                                             href="https://www.creative-tim.com?ref=pkr-footer"
                                             target="_blank"
                                         >
-                                            <i className="fa fa-linkedin fa-2x" />
+                                            <i className="fa fa-linkedin fa-2x" style={{color:"#500000"}} />
                                         </a>
                                     </span>
                                     <span>
