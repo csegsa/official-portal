@@ -1,7 +1,7 @@
 import Roles from '../models/roles.js';
 import {getRoleByEmail, deleteRoleByEmail} from '../services/database.js';
 
-export const getRoles = (req, res) => {
+export const getRolesByEmail = (req, res) => {
   console.log(req.query)
   Roles.findOne({email: req.query.email}, (err, roles) => {
     if (err) {
@@ -11,6 +11,16 @@ export const getRoles = (req, res) => {
     }
   });
 
+};
+
+export const getAllRoles = (req, res) => {
+  Roles.find({}, (err, roles) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(roles);
+    }
+  });
 };
 
 

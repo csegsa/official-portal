@@ -4,7 +4,7 @@ import { auth } from '../../views/userlogin/Firebase'
 import csegsaApi from 'api/csegsaApi.js'
 import {getRoles} from './helper'
 
-const RoleForm = ({setInput}) => {
+const RoleForm = ({setReload, setInput, toggle}) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
@@ -28,11 +28,12 @@ const RoleForm = ({setInput}) => {
         e.preventDefault();
         console.log("submitting")
         if (name === '' || role === '' || email === '') {
-          return
+            toggle()
+            return
         }
         console.log("inserting new role")
         await addRole()
-        await getRoles(auth, csegsaApi, setInput)
+        toggle()
     }
 
     async function addRole() {
@@ -45,6 +46,7 @@ const RoleForm = ({setInput}) => {
           }, { headers: { authorization: 'Bearer ' + token } })
           .then(res => {
             console.log(res.data)
+            setReload(true)
           })
     }
 

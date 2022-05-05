@@ -38,18 +38,19 @@ function MainNavbar() {
       })
   }
 
-  React.useEffect(() => {
-    if (user) {
-      getAdmin()
-    } else {
-      if (isAdmin) {
-        setAdmin(false)
-      }
-    }
-  }, [])
+  // React.useEffect(() => {
+  //   if (user) {
+  //     getAdmin()
+  //   } else {
+  //     if (isAdmin) {
+  //       setAdmin(false)
+  //     }
+  //   }
+  // }, [user])
 
   React.useEffect(() => {
     if (user) {
+      getAdmin()
       console.log(user)
       setEmail(user.email)
       setAuthenticated(true)
@@ -57,6 +58,9 @@ function MainNavbar() {
     } else {
       setEmail('')
       setLoginText('Log In')
+      if (isAdmin) {
+        setAdmin(false)
+      }
     }
   }, [user])
 

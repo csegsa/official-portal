@@ -11,16 +11,16 @@ import {getRoles} from './helper'
 function AdminCard() {
   const [input, setInput] = useState([]);
   const [user, loading, error] = useAuthState(auth)
+  const [reload, setReload] = useState(false);
 
-  async function deleteRole(email) {
-    console.log("making api call to check admin")
-      const token = await auth.currentUser.getIdToken()
-      csegsaApi.delete('/roles', {
-        email: email
-      }, { headers: { authorization: 'Bearer ' + token } })
+  async function deleteRole(id) {
+    console.log('making api call to check admin')
+    const token = await auth.currentUser.getIdToken()
+    csegsaApi
+      .delete('/roles/' + id, { headers: { authorization: 'Bearer ' + token } })
       .then(res => {
         console.log(res.data)
-        setInput(input.filter(item => item.email !== email));
+        setInput(input.filter(item => item._id !== id))
       })
   }
 
@@ -30,47 +30,45 @@ function AdminCard() {
     }
   }, [user])
 
-  const removeAdmin = async (email) => {
-    console.log("Removing " + email)
-    // const updated = [...input];
-    // setInput(input.filter(item => item.email !== email));
-    await deleteRole(email)
+  React.useEffect(async () => {
+    if (reload) {
+      console.log("supposed to reload now...")
+      await getRoles(auth, csegsaApi, setInput)
+      setReload(false)
+    }
+  }, [reload])
+
+  const removeRole = async id => {
+    console.log('Removing ' + id)
+    await deleteRole(id)
   }
 
   return (
     <>
       <CardGroup>
-        {input.map(admin => (
-            <Card key={admin.email}>
-              <CardImg
-                alt={admin.description}
-                src={admin.src}
-                top
-                width="100%"
-              />
-              <CardBody>
-                <CardTitle tag="h5">
-                  {admin.email}
-                </CardTitle>
-                <CardSubtitle
-                  className="mb-2 text-muted"
-                  tag="h6"
-                >
-                  {admin.role}
-                </CardSubtitle>
-                {/* <CardText>
+        {input.map(role => (
+          <Card key={role.email}>
+            <CardImg alt={role.description} src={role.src} top width="100%" />
+            <CardBody>
+              <CardTitle tag="h5">{role.email}</CardTitle>
+              <CardSubtitle className="mb-2 text-muted" tag="h6">
+                {role.role}
+              </CardSubtitle>
+              {/* <CardText>
                   {admin.email}
                 </CardText> */}
-                <Button color="danger" outline onClick={() => removeAdmin(admin.email)}>
-                  Remove
-                </Button>
-              </CardBody>
-            </Card>
-          )
-        )}
+              <Button color="danger" outline onClick={() => removeRole(role._id)}>
+                Remove
+              </Button>
+            </CardBody>
+          </Card>
+        ))}
       </CardGroup>
 
-      <FormModal setInput={setInput}/>
+      <FormModal 
+        setInput={setInput}
+        setReload={setReload}
+      />
     </>
   )
 }

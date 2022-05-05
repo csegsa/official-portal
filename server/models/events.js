@@ -35,6 +35,7 @@ const eventsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
+    users:[],
 });
 
 const Events = mongoose.model("Events", eventsSchema);
