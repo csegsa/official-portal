@@ -23,6 +23,9 @@ const EventsPage = () => {
   document.documentElement.classList.remove('nav-open')
 
   const handleSubmit = async eventId => {
+    if (!user) {
+      alert('Please login to RSVP')
+    }
     const token = await auth.currentUser.getIdToken()
     csegsaApi
       .post(
@@ -86,10 +89,9 @@ const EventsPage = () => {
     if (!selectedEvent) {
       return
     }
-    console.log(user.email)
-    console.log(selectedEvent.users)
+
     setIsRsvp(user && selectedEvent.users.indexOf(user.email) !== -1)
-    console.log('Rsvp: ' + isRsvp, user.email)
+
     setDisplayEvent(selectedEvent)
   }
 

@@ -44,11 +44,14 @@ const AdminCard = () => {
   return (
     <>
       <CardGroup>
-        {input.map(role => (
-          <div style={{
-            'width': '33%',
-            'marginRight': '2px'
-          }}>
+        {input.map((role, index) => (
+          <div
+            key={index}
+            style={{
+              width: '33%',
+              marginRight: '2px'
+            }}
+          >
             <Card key={role.email}>
               <CardImg alt={role.description} src={role.src} top width="100%" />
               <CardBody>

@@ -19,25 +19,25 @@ function App() {
   const [isAdmin, setAdmin] = React.useState(false)
 
   async function checkAdminStatus() {
-      if (user) {
-          const isAdminCheck = await checkAdminRole(user, loading, error, auth)
-          if (isAdminCheck) {
-              setAdmin(true)
-              console.log("[Protected]:: isAdmin")
-          } else {
-              setAdmin(false)
-          }
+    if (user) {
+      const isAdminCheck = await checkAdminRole(user, loading, error, auth)
+      if (isAdminCheck) {
+        setAdmin(true)
+        console.log('[Protected]:: isAdmin')
+      } else {
+        setAdmin(false)
       }
+    }
   }
 
   console.log(isAdmin)
 
   React.useEffect(async () => {
-      console.log("opening protected route component")
-      if (user) {
-          await checkAdminStatus()
-          console.log("awaiting done for check admin status")
-      } 
+    console.log('opening protected route component')
+    if (user) {
+      await checkAdminStatus()
+      console.log('awaiting done for check admin status')
+    }
   }, [user])
 
   return (
@@ -50,11 +50,14 @@ function App() {
         <Route path="/jobs" render={props => <JobPostings {...props} />} />
         <Route path="/add-jobs" render={props => <JobForm {...props} />} />
         {/* <Route path="/admin" render={props => <AdminPortal {...props} />} /> */}
-        <Route path="/admin" render={props => 
+        <Route
+          path="/admin"
+          render={props => (
             <ProtectedRoute isAdmin={isAdmin}>
-                <AdminPortal {...props}/>
+              <AdminPortal {...props} />
             </ProtectedRoute>
-        }/>
+          )}
+        />
         <Route path="/view-attendees/:event_id" render={props => <ViewAttendees {...props} />} />
         <Redirect to="/home" />
       </Switch>

@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
-import { 
-  Button, Form, FormGroup, Label, Input, 
-  Dropdown, DropdownToggle, DropdownMenu, DropdownItem
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from 'reactstrap'
 import { auth } from '../userlogin/Firebase'
 import csegsaApi from 'api/csegsaApi.js'
@@ -65,12 +72,8 @@ const RoleForm = ({ setReload, toggle }) => {
       <Form onSubmit={handleSubmit}>
         {formFields.map(field => (
           <FormGroup className="mb-2 me-sm-2 mb-sm-0" key={field.title}>
-            <Label
-              className="me-sm-2"
-              for="exampleEmail"
-              key={field.title}
-            >
-                {field.title}
+            <Label className="me-sm-2" for="exampleEmail" key={field.title}>
+              {field.title}
             </Label>
             <Input
               key={field.title}
@@ -78,30 +81,37 @@ const RoleForm = ({ setReload, toggle }) => {
               name={field.title}
               placeholder={field.title}
               type="text"
-              onChange={(e) => {field.method(e.target.value)}}
+              onChange={e => {
+                field.method(e.target.value)
+              }}
             />
           </FormGroup>
         ))}
 
         <FormGroup className="mb-2 me-sm-2 mb-sm-0">
-            <Label
-                className="me-sm-2"
-                for="exampleEmail"
-            >
-                Role:
-            </Label>
-            <Dropdown isOpen={dropdown} toggle={toggleDropdown}>
-                <DropdownToggle caret>
-                    {role === '' ? "Availabel roles" : role}
-                </DropdownToggle>
-                <DropdownMenu>
-                    <DropdownItem key="admin" onClick={() => setRole("Admin")} dropDownValue="Admin">Admin</DropdownItem>
-                    <DropdownItem key="coordinator" onClick={() => setRole("Coordinator")} dropDownValue="Coordinator">Coordinator</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
+          <Label className="me-sm-2" for="exampleEmail">
+            Role:
+          </Label>
+          <Dropdown isOpen={dropdown} toggle={toggleDropdown}>
+            <DropdownToggle caret>{role === '' ? 'Availabel roles' : role}</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem key="admin" onClick={() => setRole('Admin')} dropDownValue="Admin">
+                Admin
+              </DropdownItem>
+              <DropdownItem
+                key="coordinator"
+                onClick={() => setRole('Coordinator')}
+                dropDownValue="Coordinator"
+              >
+                Coordinator
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </FormGroup>
 
-        <Button type="submit" style={{'float':'right'}}>Add new role</Button>
+        <Button type="submit" style={{ float: 'right' }}>
+          Add new role
+        </Button>
       </Form>
     </>
   )

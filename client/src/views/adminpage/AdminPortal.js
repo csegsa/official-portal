@@ -10,8 +10,9 @@ import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 // import csegsaApi from 'api/csegsaApi.js'
 
-const AdminPortal = ({location}) => {
-
+// eslint-disable-next-line react/prop-types
+const AdminPortal = ({ location }) => {
+  // eslint-disable-next-line react/prop-types
   const isAdminFromNavBar = location.state.isAdmin
 
   document.documentElement.classList.remove('nav-open')
@@ -26,8 +27,8 @@ const AdminPortal = ({location}) => {
   const [user] = useAuthState(auth)
 
   React.useEffect(() => {
-    console.log("user: ", user)
-    if(user && isAdminFromNavBar) {
+    console.log('user: ', user)
+    if (user && isAdminFromNavBar) {
       setAdmin(true)
     } else {
       setAdmin(false)

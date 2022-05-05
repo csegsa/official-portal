@@ -35,7 +35,7 @@ function MainNavbar() {
         if (res.data.role === 'admin') {
           setAdmin(true)
         } else {
-          if(isAdmin) {
+          if (isAdmin) {
             setAdmin(false)
           }
         }
@@ -122,10 +122,13 @@ function MainNavbar() {
               </NavItem>
               {isAdmin && (
                 <NavItem>
-                  <NavLink to={{
-                    pathname:'/admin',
-                    state: {isAdmin: isAdmin}  
-                  }} tag={Link} >
+                  <NavLink
+                    to={{
+                      pathname: '/admin',
+                      state: { isAdmin: isAdmin }
+                    }}
+                    tag={Link}
+                  >
                     Admin Portal
                   </NavLink>
                 </NavItem>
