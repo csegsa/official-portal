@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Card, Form, Button } from 'reactstrap'
+import { Container, Row, Col, Card, Button } from 'reactstrap'
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from '@fullcalendar/interaction' // needed
@@ -20,14 +20,14 @@ function EventsPage() {
   const [showAddEvent, setShowAddEvent] = React.useState(false)
   document.documentElement.classList.remove('nav-open')
 
-  const handleSubmit = async(event_id) => {
-    const token = await auth.currentUser.getIdToken() ;
+  const handleSubmit = async eventId => {
+    const token = await auth.currentUser.getIdToken()
     console.log(token)
     csegsaApi
       .post(
         '/events/addAttendee',
         {
-          event_id:event_id,
+          event_id: eventId
         },
         {
           headers: {
@@ -119,7 +119,16 @@ function EventsPage() {
           <p className="card-text">
             <b>Time: {displayEvent[0].start_time}</b>
           </p>
-          <Button className="btn btn-success" onClick={() => {handleSubmit(displayEvent[0]._id)}}>RSVP</Button>
+          <Button
+            className="btn btn-success"
+            onClick={() => {
+              handleSubmit(displayEvent[0]._id)
+            }}
+          >
+            RSVP
+          </Button>
+          <br />
+          <br />
           <Link to={`/view-attendees/${displayEvent[0]._id}`}>View Attendees</Link>
         </div>
       </Card>

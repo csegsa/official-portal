@@ -8,6 +8,7 @@ import EventsPage from 'views/events/EventsPage'
 import AddEvent from 'views/events/AddEvent'
 import JobForm from 'views/jobs/JobForm'
 import AdminPortal from 'views/adminpage/AdminPortal'
+import ViewAttendees from 'views/events/ViewAttendees'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/jobs" render={props => <JobPostings {...props} />} />
         <Route path="/add-jobs" render={props => <JobForm {...props} />} />
         <Route path="/admin" render={props => <AdminPortal {...props} />} />
+        <Route path="/view-attendees/:event_id" render={props => <ViewAttendees {...props} />} />
         <Redirect to="/home" />
       </Switch>
     </>
