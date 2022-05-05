@@ -11,6 +11,7 @@ import csegsaApi from 'api/csegsaApi.js'
 import { Link } from 'react-router-dom'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import checkAdminRole from 'utils/CheckAdminRole'
 
 function EventsPage() {
   const [events, setEvents] = React.useState([])
@@ -46,27 +47,13 @@ function EventsPage() {
 
   async function updatePrivilegedOptionVisibility() {
     if (user) {
-      console.log('Checking if event can be added')
-      console.log(user, loading, error)
-      const token = await auth.currentUser.getIdToken()
-      csegsaApi
-        .get('/roles' + '?email=' + user.email, { headers: { authorization: 'Bearer ' + token } })
-        .then(res => {
-          console.log(res.data)
-          if (res.data.role === 'admin') {
-            setShowAddEvent(true)
-            console.log('showAddEvent: ' + showAddEvent)
-          }
-        })
-    } else if (loading) {
-      console.log('auth state Loading')
-      setShowAddEvent(false)
-    } else if (error) {
-      console.log('Error')
-      setShowAddEvent(false)
-    } else {
-      console.log('No user')
-      setShowAddEvent(false)
+      const isAdmin = await checkAdminRole(user, loading, error, auth)
+      if (isAdmin) {
+        setShowAddEvent(true)
+      } else {
+        setShowAddEvent(false)
+      }
+      console.log('showAddEvent: ' + showAddEvent)
     }
   }
 

@@ -1,0 +1,62 @@
+import React, { useState } from 'react'
+import { CardGroup, Card, CardImg, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap'
+import FormModal from './FormModal'
+import csegsaApi from 'api/csegsaApi.js'
+import { auth } from '../userlogin/Firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { getRoles } from './helper'
+
+function AdminCard() {
+  const [input, setInput] = useState([])
+  const [user, ,] = useAuthState(auth)
+
+  async function deleteRole(id) {
+    console.log('making api call to check admin')
+    const token = await auth.currentUser.getIdToken()
+    csegsaApi
+      .delete('/roles/' + id, { headers: { authorization: 'Bearer ' + token } })
+      .then(res => {
+        console.log(res.data)
+        setInput(input.filter(item => item._id !== id))
+      })
+  }
+
+  React.useEffect(async () => {
+    if (user) {
+      await getRoles(auth, csegsaApi, setInput)
+    }
+  }, [user])
+
+  const removeRole = async id => {
+    console.log('Removing ' + id)
+    await deleteRole(id)
+  }
+
+  return (
+    <>
+      <CardGroup>
+        {input.map(role => (
+          <Card key={role.email}>
+            <CardImg alt={role.description} src={role.src} top width="100%" />
+            <CardBody>
+              <CardTitle tag="h5">{role.email}</CardTitle>
+              <CardSubtitle className="mb-2 text-muted" tag="h6">
+                {role.role}
+              </CardSubtitle>
+              {/* <CardText>
+                  {admin.email}
+                </CardText> */}
+              <Button color="danger" outline onClick={() => removeRole(role._id)}>
+                Remove
+              </Button>
+            </CardBody>
+          </Card>
+        ))}
+      </CardGroup>
+
+      <FormModal setInput={setInput} />
+    </>
+  )
+}
+
+export default AdminCard

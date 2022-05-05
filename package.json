@@ -9,10 +9,13 @@
     "node": "=16.14.0"
   },
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "transform": {
+        "^.+\\.(ts|tsx)$": "ts-jest"
+    }
   },
   "scripts": {
-    "test": "cd specs &&  npm test",
+    "test": "jest",
     "start": "node server/index.js",
     "build": "npm install && cd client && npm install &&  export DISABLE_ESLINT_PLUGIN=true && npm run build",
     "lint": "eslint ./server --fix"
@@ -44,13 +47,14 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.3.2",
-    "cypress": "^9.5.4",
+    "@types/jest": "^27.4.1",
     "eslint": "^8.14.0",
     "eslint-config-google": "^0.14.0",
     "install": "^0.13.0",
-    "jest": "^28.0.3",
-    "mocha": "^10.0.0",
+    "jest": "^27.0.0",
     "npm": "^8.5.5",
+    "ts-jest": "^27.1.4",
+    "mocha": "^10.0.0",
     "nyc": "^15.1.0"
   }
 }

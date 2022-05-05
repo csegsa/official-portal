@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/all', authenticate, authorizeRole, getAllRoles);
 router.get("/", authenticate, getRolesByEmail);
 router.post("/", authenticate, authorizeRole, createRole);
-router.delete("/",authenticate, authorizeRole, deleteRole);
+router.delete("/:id",authenticate, authorizeRole, deleteRole);
 router.patch("/", authenticate, authorizeRole, updateRole);
 
 

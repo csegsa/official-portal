@@ -8,14 +8,14 @@ import classnames from 'classnames'
 import { Collapse, NavbarBrand, Navbar, NavItem, NavLink, Nav, Container, Button } from 'reactstrap'
 import { auth, signOutOfGoogle } from '../../views/userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-
+import csegsaApi from 'api/csegsaApi.js'
 import Logo from '../../assets/img/csegsa/csegsa.webp'
 
 function MainNavbar() {
   const [navbarColor, setNavbarColor] = React.useState('navbar-transparent')
   const [navbarCollapse, setNavbarCollapse] = React.useState(false)
-  const [, setEmail] = React.useState('')
 
+  const [isAdmin, setAdmin] = React.useState(false)
   const [user] = useAuthState(auth)
   const [authenticated, setAuthenticated] = React.useState(false)
   const [loginText, setLoginText] = React.useState('Login')
@@ -25,14 +25,35 @@ function MainNavbar() {
     document.documentElement.classList.toggle('nav-open')
   }
 
+  async function getAdmin() {
+    console.log('making api call to check admin')
+    const token = await auth.currentUser.getIdToken()
+    csegsaApi
+      .get('/roles' + '?email=' + user.email, { headers: { authorization: 'Bearer ' + token } })
+      .then(res => {
+        console.log(res.data)
+        if (res.data.role === 'admin') {
+          setAdmin(true)
+        }
+      })
+  }
+
+  React.useEffect(() => {
+    if (user) {
+      getAdmin()
+    } else {
+      if (isAdmin) {
+        setAdmin(false)
+      }
+    }
+  }, [])
+
   React.useEffect(() => {
     if (user) {
       console.log(user)
-      setEmail(user.email)
       setAuthenticated(true)
       setLoginText(user.email + ' (Log Out)')
     } else {
-      setEmail('')
       setLoginText('Log In')
     }
   }, [user])
@@ -101,6 +122,13 @@ function MainNavbar() {
                   Contact Us
                 </NavLink>
               </NavItem>
+              {isAdmin && (
+                <NavItem>
+                  <NavLink to="/admin" tag={Link}>
+                    Admin Portal
+                  </NavLink>
+                </NavItem>
+              )}
 
               <NavItem>
                 {!authenticated ? (
