@@ -45,21 +45,26 @@ const AdminCard = () => {
     <>
       <CardGroup>
         {input.map(role => (
-          <Card key={role.email}>
-            <CardImg alt={role.description} src={role.src} top width="100%" />
-            <CardBody>
-              <CardTitle tag="h5">{role.email}</CardTitle>
-              <CardSubtitle className="mb-2 text-muted" tag="h6">
-                {role.role}
-              </CardSubtitle>
-              {/* <CardText>
-                  {admin.email}
-                </CardText> */}
-              <Button color="danger" outline onClick={() => removeRole(role._id)}>
-                Remove
-              </Button>
-            </CardBody>
-          </Card>
+          <div style={{
+            'width': '33%',
+            'marginRight': '2px'
+          }}>
+            <Card key={role.email}>
+              <CardImg alt={role.description} src={role.src} top width="100%" />
+              <CardBody>
+                <CardTitle tag="h5">{role.email}</CardTitle>
+                <CardSubtitle className="mb-2 text-muted" tag="h6">
+                  {role.role}
+                </CardSubtitle>
+                {/* <CardText>
+                    {admin.email}
+                  </CardText> */}
+                <Button color="danger" outline onClick={() => removeRole(role._id)}>
+                  Remove
+                </Button>
+              </CardBody>
+            </Card>
+          </div>
         ))}
       </CardGroup>
 

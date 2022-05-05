@@ -8,9 +8,12 @@ import MainFooter from 'components/Footers/MainFooter'
 import AdminCard from './AdminCard'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import csegsaApi from 'api/csegsaApi.js'
+// import csegsaApi from 'api/csegsaApi.js'
 
-const AdminPortal = () => {
+const AdminPortal = ({location}) => {
+
+  const isAdminFromNavBar = location.state.isAdmin
+
   document.documentElement.classList.remove('nav-open')
   React.useEffect(() => {
     document.body.classList.add('profile-page')
@@ -22,29 +25,14 @@ const AdminPortal = () => {
   const [isAdmin, setAdmin] = React.useState(false)
   const [user] = useAuthState(auth)
 
-  async function getAdmin() {
-    console.log('making api call to check admin in Protected Route')
-    const token = await auth.currentUser.getIdToken()
-    csegsaApi
-      .get('/roles' + '?email=' + user.email, { headers: { authorization: 'Bearer ' + token } })
-      .then(res => {
-        console.log(res.data)
-        if (res.data.role === 'admin') {
-          console.log('person is admin')
-          setAdmin(true)
-        }
-      })
-  }
-
   React.useEffect(() => {
-    if (user) {
-      getAdmin()
+    console.log("user: ", user)
+    if(user && isAdminFromNavBar) {
+      setAdmin(true)
     } else {
-      if (isAdmin) {
-        setAdmin(false)
-      }
+      setAdmin(false)
     }
-  }, [user])
+  }, [user, isAdminFromNavBar])
 
   return (
     <>
