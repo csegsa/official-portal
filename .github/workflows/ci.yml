@@ -32,7 +32,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: 3036d86d7b3bb19ff7c998170e33e58778a83a76b2a5944ae78f5a16a1abdd44
         with:
-          coverageCommand: npm run test
+          coverageCommand: npm test -- --coverage --watchAll=false
           debug: true
           workingDirectory: ${{github.workspace}}/client
 
