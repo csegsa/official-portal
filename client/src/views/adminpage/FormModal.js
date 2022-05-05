@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import RoleForm from './RoleForm'
 
-const FormModal = ({setInput, setReload}) => {
+const FormModal = ({setReload}) => {
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
@@ -24,7 +24,6 @@ const FormModal = ({setInput, setReload}) => {
                 <ModalBody>
                     <RoleForm 
                         setReload={setReload}
-                        setInput={setInput}
                         toggle={toggle}
                     />
                 </ModalBody>

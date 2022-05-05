@@ -75,10 +75,10 @@ function RegisterPage() {
         }}
       >
         <div className="filter" />
-        <Container>
+        <Container >
           <Row>
             <Col className="ml-auto mr-auto" lg="4">
-              <Card className="card-register ml-auto mr-auto">
+              <Card className="card-register ml-auto mr-auto" style={{'background': '#500000'}}>
                 <h3 className="title mx-auto">Welcome</h3>
                 <div className="social-line text-center">
                   <Button
@@ -89,47 +89,6 @@ function RegisterPage() {
                     onClick={login}
                   >
                     <i className="fa fa-google-plus" />
-                  </Button>
-                </div>
-                <Form className="register-form">
-                  <label>Email</label>
-                  <Input placeholder="Email" type="text" onChange={e => setEmail(e.target.value)} />
-                  {emailError !== '' && <span>{emailError}</span>}
-
-                  <label>Password</label>
-                  <Input
-                    placeholder="Password"
-                    type="password"
-                    onChange={e => setPassword(e.target.value)}
-                  />
-                  {passwordError !== '' && <span>{passwordError}</span>}
-
-                  <Button
-                    block
-                    className="btn-round"
-                    color="danger"
-                    onClick={handleLoginWithEmailAndPassword}
-                  >
-                    Login here
-                  </Button>
-                </Form>
-                <div className="forgot">
-                  <Button
-                    className="btn-link"
-                    color="danger"
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
-                  >
-                    Register new account?
-                  </Button>
-                  <Button
-                    className="btn-link"
-                    style={{ marginTop: '0px' }}
-                    color="danger"
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
-                  >
-                    Forgot password?
                   </Button>
                 </div>
               </Card>

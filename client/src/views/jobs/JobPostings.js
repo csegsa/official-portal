@@ -10,7 +10,7 @@ import MainFooter from 'components/Footers/MainFooter'
 
 import JobListing from './JobListing.js'
 import { Link } from 'react-router-dom'
-import checkAdminRole from 'utils/CheckAdminRole'
+import { checkAdminRole } from 'utils/CheckAdminRole'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 

@@ -11,7 +11,7 @@ import csegsaApi from 'api/csegsaApi.js'
 import { Link } from 'react-router-dom'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import checkAdminRole from 'utils/CheckAdminRole'
+import { checkAdminRole } from 'utils/CheckAdminRole'
 
 const EventsPage = () => {
   const [events, setEvents] = React.useState([])
