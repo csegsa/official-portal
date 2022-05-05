@@ -36,11 +36,21 @@ function ContactUsSection() {
       emailjs.send('service_4a1ob33', 'template_vk3nieo', toSend, 'ShSakye0AbwjRUTNf').then(
         result => {
           console.log(result.text)
+          alert('Message was sent')
+          setToSend({
+            from_name: '',
+            from_email: '',
+            message: ''
+          })
+          console.log(toSend)
         },
         error => {
           console.log(error.text)
+          alert('Error sending email')
         }
       )
+    } else {
+      alert('Message box is empty')
     }
   }
 
