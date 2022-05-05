@@ -18,11 +18,12 @@ const EventsPage = () => {
   const [displayEvent, setDisplayEvent] = React.useState(null)
   const [user, loading, error] = useAuthState(auth)
   const [showAddEvent, setShowAddEvent] = React.useState(false)
+  const [isRsvp, setIsRsvp] = React.useState(false)
+
   document.documentElement.classList.remove('nav-open')
 
   const handleSubmit = async eventId => {
     const token = await auth.currentUser.getIdToken()
-    console.log(token)
     csegsaApi
       .post(
         '/events/addAttendee',
@@ -36,7 +37,8 @@ const EventsPage = () => {
         }
       )
       .then(res => {
-        console.log(res)
+        console.log('Added attendee to event')
+        setIsRsvp(true)
       })
       .catch(err => {
         console.log(err)
@@ -75,12 +77,19 @@ const EventsPage = () => {
       .catch(err => {
         console.log(err)
       })
-  }, [])
+  }, [isRsvp])
 
   const viewEvent = arg => {
     const filterId = arg.event.id
 
-    const selectedEvent = events.filter(event => event._id === filterId)
+    const selectedEvent = events.find(event => event._id === filterId)
+    if (!selectedEvent) {
+      return
+    }
+    console.log(user.email)
+    console.log(selectedEvent.users)
+    setIsRsvp(user && selectedEvent.users.indexOf(user.email) !== -1)
+    console.log('Rsvp: ' + isRsvp, user.email)
     setDisplayEvent(selectedEvent)
   }
 
@@ -104,29 +113,29 @@ const EventsPage = () => {
     cardContent = (
       <Card className="ml-auto mr-auto">
         <div className="card-body">
-          <h3 className="card-title">{displayEvent[0].name}</h3>
+          <h3 className="card-title">{displayEvent.name}</h3>
           <h6 className="card-subtitle mb-2 text-muted">Event subtitle</h6>
           <p className="card-text">
             Some quick example text to build on the card title and make up the bulk of the
             card&apos;s content.
           </p>
           <p className="card-text">
-            <b>Venue: {displayEvent[0].location}</b>
+            <b>Venue: {displayEvent.location}</b>
           </p>
           <p className="card-text">
-            <b>Time: {displayEvent[0].start_time}</b>
+            <b>Time: {displayEvent.start_time}</b>
           </p>
           <Button
-            className="btn btn-success"
+            className={isRsvp ? 'btn btn-success' : 'btn btn-primary'}
             onClick={() => {
-              handleSubmit(displayEvent[0]._id)
+              handleSubmit(displayEvent._id)
             }}
           >
-            RSVP
+            {isRsvp ? 'Attending' : 'RSVP'}
           </Button>
           <br />
           <br />
-          <Link to={`/view-attendees/${displayEvent[0]._id}`}>View Attendees</Link>
+          <Link to={`/view-attendees/${displayEvent._id}`}>View Attendees</Link>
         </div>
       </Card>
     )
