@@ -3,7 +3,7 @@ import React from 'react'
 // reactstrap components
 import { Container } from 'reactstrap'
 // core components
-import {prepView} from './EventPageHeader';
+import { prepView } from './EventPageHeader'
 
 const AdminPageHeader = () => {
   const pageHeader = React.createRef()

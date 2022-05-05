@@ -7,7 +7,6 @@ import JobPostings from 'views/jobs/JobPostings'
 import EventsPage from 'views/events/EventsPage'
 import AddEvent from 'views/events/AddEvent'
 import JobForm from 'views/jobs/JobForm'
-import AdminPortal from 'views/adminpage/AdminPortal'
 import ViewAttendees from 'views/events/ViewAttendees'
 import AdminPortal from 'views/adminpage/AdminPortal'
 

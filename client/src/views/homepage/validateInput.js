@@ -1,10 +1,5 @@
-const validateInput = (input) => {
-  if(input.message != "") {
-    return true ;
-  }
-  else {
-    return false ;
-  }
+const validateInput = input => {
+  return input.message != ''
 }
 
-module.exports = validateInput ;
+module.exports = validateInput
