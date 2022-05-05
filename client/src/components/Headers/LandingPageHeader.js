@@ -40,6 +40,7 @@ function LandingPageHeader() {
             <h3>
               <b>Computer Science and Engineering Graduate Student Association</b>
             </h3>
+            <br />
             <Button className="btn-round" color="danger" href="#about">
               Learn More
             </Button>
