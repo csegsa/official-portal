@@ -48,7 +48,6 @@
   "devDependencies": {
     "@cucumber/cucumber": "^7.3.2",
     "@types/jest": "^27.4.1",
-    "cypress": "^9.5.4",
     "eslint": "^8.14.0",
     "eslint-config-google": "^0.14.0",
     "install": "^0.13.0",

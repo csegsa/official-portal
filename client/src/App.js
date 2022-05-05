@@ -7,21 +7,23 @@ import JobPostings from 'views/jobs/JobPostings'
 import EventsPage from 'views/events/EventsPage'
 import AddEvent from 'views/events/AddEvent'
 import JobForm from 'views/jobs/JobForm'
+import AdminPortal from 'views/adminpage/AdminPortal'
 
 function App() {
-    return (
-        <>
-            <Switch>
-                <Route path="/home" render={props => <LandingPage {...props} />} />
-                <Route path="/login" render={props => <LoginPage {...props} />} />
-                <Route path="/events" render={props => <EventsPage {...props} />} />
-                <Route path="/add-event" render={props => <AddEvent {...props} />} />
-                <Route path="/jobs" render={props => <JobPostings {...props} />} />
-                <Route path="/add-jobs" render={props => <JobForm {...props} />} />
-                <Redirect to="/home" />
-            </Switch>
-        </>
-    )
+  return (
+    <>
+      <Switch>
+        <Route path="/home" render={props => <LandingPage {...props} />} />
+        <Route path="/login" render={props => <LoginPage {...props} />} />
+        <Route path="/events" render={props => <EventsPage {...props} />} />
+        <Route path="/add-event" render={props => <AddEvent {...props} />} />
+        <Route path="/jobs" render={props => <JobPostings {...props} />} />
+        <Route path="/add-jobs" render={props => <JobForm {...props} />} />
+        <Route path="/admin" render={props => <AdminPortal {...props} />} />
+        <Redirect to="/home" />
+      </Switch>
+    </>
+  )
 }
 
 export default App
