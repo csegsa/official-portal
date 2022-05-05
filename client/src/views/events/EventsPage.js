@@ -48,17 +48,14 @@ const EventsPage = () => {
   async function updatePrivilegedOptionVisibility() {
     if (user) {
       const isAdmin = await checkAdminRole(user, loading, error, auth)
-      if (isAdmin) {
-        setShowAddEvent(true)
-      } else {
-        setShowAddEvent(false)
-      }
-      console.log('showAddEvent: ' + showAddEvent)
+      setShowAddEvent(isAdmin)
+    } else {
+      setShowAddEvent(false)
     }
   }
 
   React.useEffect(async () => {
-    updatePrivilegedOptionVisibility()
+    await updatePrivilegedOptionVisibility()
   }, [user, loading, error])
 
   React.useEffect(() => {
