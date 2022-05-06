@@ -1,5 +1,5 @@
-# official-portal
-A online web portal for CSEGSA
+# Texas A&M CSEGSA - Official Portal
+A online web portal for Computer Science and Engineering Graduate Student's Association of Texas A&M University.
 
 Architecture:
 
@@ -53,6 +53,7 @@ Firbase Console's Project Settings page will have the API keys
 The above data is expected in .env file in the root directory.
 The command to start in local is:
 ```shell
+
 npm run start
 ```
 
@@ -61,4 +62,7 @@ HEROKU deployment is done using the following command using Heroku CLI:
 ```shell
 heroku login
 git push heroku main
+
+npm run test
+
 ```
