@@ -31,8 +31,6 @@ database "MongoDB" as db{
 client <--> server
 firebase <-> client
 db <-> server
-
-server -> firebase
-firebase --> server
+firebase <-> server
 
 @enduml
