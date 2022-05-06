@@ -1,13 +1,12 @@
 @startuml
 autonumber
 
-
-'entity Node_Backend as node_backend
-
 React_Client -> Firebase: Authentication Request
 Firebase --> React_Client: Authentication Response
 
-React_Client -> Node_Backend: User Request with Authentication Token
+React_Client -> Node_Backend: User Request with AuthenticationToken
+Node_Backend -> Firebase: GetUser with AuthenticationToken
+Firebase --> Node_Backend: Response with User Details
 database Database_Mongo as db
 Node_Backend -> db: Request Data (Mongoose)
 db --> Node_Backend: Response Data
