@@ -1,5 +1,5 @@
 # official-portal
-Web portal for Computer Science And Engineering Graduate Student Association
+A online web portal for CSEGSA
 
 Architecture:
 
