@@ -1,5 +1,5 @@
-# Texas A&M CSEGSA - Official Portal
-A online web portal for Computer Science and Engineering Graduate Student's Association of Texas A&M University.
+# official-portal
+A online web portal for CSEGSA
 
 Architecture:
 
@@ -7,9 +7,8 @@ Architecture:
 
 The portal is implements using MERN stack.
 
-React Client is developed using React.js and the build production ready react app is served through
-Node Express server is used to serve the react app.
-CRUD operations are performed on the backend using MongoDB and Mongoose.
+React Client is developed using React.js. The built production ready react app is served through
+Node Express server. CRUD operations are performed on the backend through API  on MongoDB using Mongoose module
 
 Client and Server communicate over these APIs:
 
@@ -48,12 +47,11 @@ FIREBASE_AUTH_CERT_URL
 FIREBASE_CLIENT_CERT_URL
 ```
 Also corresponding API keys  need to be set in client side client/src/views/userlogin/Firebase.js 
-Firbase Console's Project Settings page will have the API keys
+Firebase Console's Project Settings page will have the API keys
 
 The above data is expected in .env file in the root directory.
 The command to start in local is:
 ```shell
-
 npm run start
 ```
 
@@ -62,7 +60,15 @@ HEROKU deployment is done using the following command using Heroku CLI:
 ```shell
 heroku login
 git push heroku main
-
-npm run test
-
 ```
+
+
+# Testing:
+
+Install selenium-webdriver: for Chrome
+https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
+```shell
+npm run test
+```
+Postman Collection is available in the root directory for the API testing
+
