@@ -1,5 +1,5 @@
-# official-portal
-A online web portal for CSEGSA
+# Texas A&M CSEGSA - Official Portal
+A online web portal for Computer Science and Engineering Graduate Student's Association of Texas A&M University.
 
 # Getting Started:
 Node version: v16.14.0
