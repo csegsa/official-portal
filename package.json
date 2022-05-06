@@ -15,8 +15,7 @@
     }
   },
   "scripts": {
-    "test": "jest",
-    "bdd_test": "cd specs && npm run test",
+    "test": "cd specs && npm run test",
     "start": "node server/index.js",
     "build": "npm install && cd client && npm install &&  export DISABLE_ESLINT_PLUGIN=true && npm run build",
     "lint": "eslint ./server --fix"
