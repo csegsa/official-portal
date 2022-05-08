@@ -19,6 +19,7 @@ const EventsPage = () => {
   const [user, loading, error] = useAuthState(auth)
   const [showAddEvent, setShowAddEvent] = React.useState(false)
   const [isRsvp, setIsRsvp] = React.useState(false)
+  const [displayTime, setDisplayTime] = React.useState(null)
 
   document.documentElement.classList.remove('nav-open')
 
@@ -92,7 +93,9 @@ const EventsPage = () => {
     if (!selectedEvent) {
       return
     }
-
+    const formatTime = new Date(selectedEvent.start_time)
+    console.log(formatTime)
+    setDisplayTime(formatTime.toLocaleString())
     setIsRsvp(user && selectedEvent.users.indexOf(user.email) !== -1)
 
     setDisplayEvent(selectedEvent)
@@ -120,16 +123,12 @@ const EventsPage = () => {
       <Card className="ml-auto mr-auto">
         <div className="card-body">
           <h3 className="card-title">{displayEvent.name}</h3>
-          <h6 className="card-subtitle mb-2 text-muted">Event subtitle</h6>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the bulk of the
-            card&apos;s content.
-          </p>
+          <p className="card-text">{displayEvent.description}</p>
           <p className="card-text">
             <b>Venue: {displayEvent.location}</b>
           </p>
           <p className="card-text">
-            <b>Time: {displayEvent.start_time}</b>
+            <b>Time: {displayTime}</b>
           </p>
           <Button
             className={isRsvp ? 'btn btn-success' : 'btn btn-primary'}
