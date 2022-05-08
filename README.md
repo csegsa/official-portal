@@ -68,7 +68,16 @@ git push heroku main
 Install selenium-webdriver: for Chrome
 https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/
 ```shell
-npm run test
+npm run bdd_test
 ```
+In case selenium throws an error saying
+
+```shell
+SessionNotCreatedError: session not created: This version of ChromeDriver only supports Chrome version 99
+```
+
+Check the version of chrome you are currenly running on your system and replace the chromedriver version
+in _package.json (line 40)_ in the root directory of the project. 
+
 Postman Collection is available in the root directory for the API testing
 
