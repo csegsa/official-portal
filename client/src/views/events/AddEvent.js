@@ -22,6 +22,8 @@ const AddItem = () => {
     console.log(endTime.toISOString())
     console.log(eventName)
     const token = await auth.currentUser.getIdToken()
+
+    // based on the form values, send a post request to the backend to add event to the database.
     csegsaApi
       .post(
         '/events',
