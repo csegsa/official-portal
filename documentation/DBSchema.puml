@@ -6,7 +6,7 @@ hide circle
 ' avoid problems with angled crows feet
 skinparam linetype ortho
 
-entity "User" as user {
+entity "User(Firebase)" as user {
   *user_id : number <<generated>>
   --
   *username : text

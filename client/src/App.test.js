@@ -8,7 +8,6 @@ import AddEvent from 'views/events/AddEvent'
 import JobForm from 'views/jobs/JobForm'
 import '@testing-library/jest-dom/extend-expect'
 import testRoutes from 'utils/TestRoute'
-
 jest.mock('views/homepage/LandingPage')
 jest.mock('views/userlogin/LoginPage')
 jest.mock('views/jobs/JobPostings')

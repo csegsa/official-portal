@@ -6,9 +6,10 @@ import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { getRoles } from './helper'
 
-function AdminCard() {
+const AdminCard = () => {
   const [input, setInput] = useState([])
-  const [user, ,] = useAuthState(auth)
+  const [user] = useAuthState(auth)
+  const [reload, setReload] = useState(false)
 
   async function deleteRole(id) {
     console.log('making api call to check admin')
@@ -27,6 +28,14 @@ function AdminCard() {
     }
   }, [user])
 
+  React.useEffect(async () => {
+    if (reload) {
+      console.log('supposed to reload now...')
+      await getRoles(auth, csegsaApi, setInput)
+      setReload(false)
+    }
+  }, [reload])
+
   const removeRole = async id => {
     console.log('Removing ' + id)
     await deleteRole(id)
@@ -35,26 +44,34 @@ function AdminCard() {
   return (
     <>
       <CardGroup>
-        {input.map(role => (
-          <Card key={role.email}>
-            <CardImg alt={role.description} src={role.src} top width="100%" />
-            <CardBody>
-              <CardTitle tag="h5">{role.email}</CardTitle>
-              <CardSubtitle className="mb-2 text-muted" tag="h6">
-                {role.role}
-              </CardSubtitle>
-              {/* <CardText>
-                  {admin.email}
-                </CardText> */}
-              <Button color="danger" outline onClick={() => removeRole(role._id)}>
-                Remove
-              </Button>
-            </CardBody>
-          </Card>
+        {input.map((role, index) => (
+          <div
+            key={index}
+            style={{
+              width: '33%',
+              marginRight: '2px'
+            }}
+          >
+            <Card key={role.email}>
+              <CardImg alt={role.description} src={role.src} top width="100%" />
+              <CardBody>
+                <CardTitle tag="h5">{role.email}</CardTitle>
+                <CardSubtitle className="mb-2 text-muted" tag="h6">
+                  {role.role}
+                </CardSubtitle>
+                {/* <CardText>
+                    {admin.email}
+                  </CardText> */}
+                <Button color="danger" outline onClick={() => removeRole(role._id)}>
+                  Remove
+                </Button>
+              </CardBody>
+            </Card>
+          </div>
         ))}
       </CardGroup>
 
-      <FormModal setInput={setInput} />
+      <FormModal setInput={setInput} setReload={setReload} />
     </>
   )
 }

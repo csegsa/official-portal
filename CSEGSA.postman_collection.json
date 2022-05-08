@@ -1,0 +1,1042 @@
+{
+	"info": {
+		"_postman_id": "540b96dd-4a89-4819-ba28-323668ae7b76",
+		"name": "CSEGSA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post Event Unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status is 401\", function(){\r",
+							"    pm.response.to.have.status(401)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"unauthorized\", function(){\r",
+							"    pm.expect(pm.response.text()).to.eq(\"Unauthorized\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"description\", 'HRBB Event')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWJoaW5hbmQgU2FpIE5hc2FyaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp4aHdzdnZOS1hwUTctMHV1dENzbEZrOXp6WmZwZXIteDFZZE9hZz1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9jc2Vnc2EtcG9ydGFsIiwiYXVkIjoiY3NlZ3NhLXBvcnRhbCIsImF1dGhfdGltZSI6MTY1MTQ1MzU5NywidXNlcl9pZCI6Im5SVXZkZ0poaG9ocFlvZVdONUpKQkZOdkJwRTIiLCJzdWIiOiJuUlV2ZGdKaGhvaHBZb2VXTjVKSkJGTnZCcEUyIiwiaWF0IjoxNjUxNDUzNTk3LCJleHAiOjE2NTE0NTcxOTcsImVtYWlsIjoiYWJoaW5hbmRAdGFtdS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDMwMDEwMDE3NDg0NjQ5MTk4NSJdLCJlbWFpbCI6WyJhYmhpbmFuZEB0YW11LmVkdSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.dR9qvVi0LY-utLyRyaFn50w17ef0IGlM_WejZwyTfV_qkm56HTdajQatRubiql87LDyriw_zPYBlAfTTY_oaMb90XA5OMSrjrOTUnbMJkZBt3fnj_2TI5ueKHOS87Ni18OcX2Dl7R1OhxFYG4JyjTSM6CJxXFTzUG3qstjbdMvnjftxP0uFMj8VZqUQKGYuZm_H8Uj1g5KkyYDbysPCTzRAhSnXgEnjMcTSFrUH8JgEf5urgaAGstVV6JQZXtTHBPReykAM_UqyXX_UoWy2O84UEXukXzPgNoPfIw_ZyYKxcANeXg91lnA_0wYBF8EetDUrSntXAtUDzWsUwD8xBYg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"kickoff\",\r\n    \"description\": \"{{description}}\",\r\n    \"start_time\": \"2022-04-22T14:55:00.301Z\",\r\n    \"end_time\": \"2022-04-22T14:55:00.301Z\",\r\n    \"location\": \"HRBB 44\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/events"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Event Authorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.collectionVariables.set(\"created_event_id\", pm.response.json()._id)\r",
+							"\r",
+							"pm.test(\"status is 201\", function(){\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    \r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.location).to.eq(\"HRBB 44\")\r",
+							"    pm.expect(res_json.description).to.eq(pm.collectionVariables.get(\"description\"))\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"description\", 'HRBB Event')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWJoaW5hbmQgU2FpIE5hc2FyaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp4aHdzdnZOS1hwUTctMHV1dENzbEZrOXp6WmZwZXIteDFZZE9hZz1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9jc2Vnc2EtcG9ydGFsIiwiYXVkIjoiY3NlZ3NhLXBvcnRhbCIsImF1dGhfdGltZSI6MTY1MTQ1MzU5NywidXNlcl9pZCI6Im5SVXZkZ0poaG9ocFlvZVdONUpKQkZOdkJwRTIiLCJzdWIiOiJuUlV2ZGdKaGhvaHBZb2VXTjVKSkJGTnZCcEUyIiwiaWF0IjoxNjUxNDUzNTk3LCJleHAiOjE2NTE0NTcxOTcsImVtYWlsIjoiYWJoaW5hbmRAdGFtdS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDMwMDEwMDE3NDg0NjQ5MTk4NSJdLCJlbWFpbCI6WyJhYmhpbmFuZEB0YW11LmVkdSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.dR9qvVi0LY-utLyRyaFn50w17ef0IGlM_WejZwyTfV_qkm56HTdajQatRubiql87LDyriw_zPYBlAfTTY_oaMb90XA5OMSrjrOTUnbMJkZBt3fnj_2TI5ueKHOS87Ni18OcX2Dl7R1OhxFYG4JyjTSM6CJxXFTzUG3qstjbdMvnjftxP0uFMj8VZqUQKGYuZm_H8Uj1g5KkyYDbysPCTzRAhSnXgEnjMcTSFrUH8JgEf5urgaAGstVV6JQZXtTHBPReykAM_UqyXX_UoWy2O84UEXukXzPgNoPfIw_ZyYKxcANeXg91lnA_0wYBF8EetDUrSntXAtUDzWsUwD8xBYg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"kickoff\",\r\n    \"description\": \"{{description}}\",\r\n    \"start_time\": \"2022-04-22T14:55:00.301Z\",\r\n    \"end_time\": \"2022-04-22T14:55:00.301Z\",\r\n    \"location\": \"HRBB 44\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/events"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"check for created event\", function(){\r",
+							"    const response = pm.response.json()\r",
+							"    // const created_event_id = pm.collectionVariables.get(\"created_event_id\");\r",
+							"    // console.log(response.map(event => event._id), created_event_id)\r",
+							"    const newEventFound = response.map(event => event._id).any(x => x === pm.collectionVariables.get(\"created_event_id\"))\r",
+							"    pm.expect(true).to.eq(newEventFound)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"description\", 'HRBB Event')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWJoaW5hbmQgU2FpIE5hc2FyaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp4aHdzdnZOS1hwUTctMHV1dENzbEZrOXp6WmZwZXIteDFZZE9hZz1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9jc2Vnc2EtcG9ydGFsIiwiYXVkIjoiY3NlZ3NhLXBvcnRhbCIsImF1dGhfdGltZSI6MTY1MTQ1MzU5NywidXNlcl9pZCI6Im5SVXZkZ0poaG9ocFlvZVdONUpKQkZOdkJwRTIiLCJzdWIiOiJuUlV2ZGdKaGhvaHBZb2VXTjVKSkJGTnZCcEUyIiwiaWF0IjoxNjUxNDUzNTk3LCJleHAiOjE2NTE0NTcxOTcsImVtYWlsIjoiYWJoaW5hbmRAdGFtdS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDMwMDEwMDE3NDg0NjQ5MTk4NSJdLCJlbWFpbCI6WyJhYmhpbmFuZEB0YW11LmVkdSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.dR9qvVi0LY-utLyRyaFn50w17ef0IGlM_WejZwyTfV_qkm56HTdajQatRubiql87LDyriw_zPYBlAfTTY_oaMb90XA5OMSrjrOTUnbMJkZBt3fnj_2TI5ueKHOS87Ni18OcX2Dl7R1OhxFYG4JyjTSM6CJxXFTzUG3qstjbdMvnjftxP0uFMj8VZqUQKGYuZm_H8Uj1g5KkyYDbysPCTzRAhSnXgEnjMcTSFrUH8JgEf5urgaAGstVV6JQZXtTHBPReykAM_UqyXX_UoWy2O84UEXukXzPgNoPfIw_ZyYKxcANeXg91lnA_0wYBF8EetDUrSntXAtUDzWsUwD8xBYg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/events"
+			},
+			"response": []
+		},
+		{
+			"name": "Get EventsById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    \r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.location).to.eq(\"HRBB 44\")\r",
+							"    pm.expect(res_json.description).to.eq(pm.collectionVariables.get(\"description\"))\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"description\", 'HRBB Event')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWJoaW5hbmQgU2FpIE5hc2FyaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp4aHdzdnZOS1hwUTctMHV1dENzbEZrOXp6WmZwZXIteDFZZE9hZz1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9jc2Vnc2EtcG9ydGFsIiwiYXVkIjoiY3NlZ3NhLXBvcnRhbCIsImF1dGhfdGltZSI6MTY1MTQ1MzU5NywidXNlcl9pZCI6Im5SVXZkZ0poaG9ocFlvZVdONUpKQkZOdkJwRTIiLCJzdWIiOiJuUlV2ZGdKaGhvaHBZb2VXTjVKSkJGTnZCcEUyIiwiaWF0IjoxNjUxNDUzNTk3LCJleHAiOjE2NTE0NTcxOTcsImVtYWlsIjoiYWJoaW5hbmRAdGFtdS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDMwMDEwMDE3NDg0NjQ5MTk4NSJdLCJlbWFpbCI6WyJhYmhpbmFuZEB0YW11LmVkdSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.dR9qvVi0LY-utLyRyaFn50w17ef0IGlM_WejZwyTfV_qkm56HTdajQatRubiql87LDyriw_zPYBlAfTTY_oaMb90XA5OMSrjrOTUnbMJkZBt3fnj_2TI5ueKHOS87Ni18OcX2Dl7R1OhxFYG4JyjTSM6CJxXFTzUG3qstjbdMvnjftxP0uFMj8VZqUQKGYuZm_H8Uj1g5KkyYDbysPCTzRAhSnXgEnjMcTSFrUH8JgEf5urgaAGstVV6JQZXtTHBPReykAM_UqyXX_UoWy2O84UEXukXzPgNoPfIw_ZyYKxcANeXg91lnA_0wYBF8EetDUrSntXAtUDzWsUwD8xBYg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/events/{{created_event_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Attendee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"check for created attendee\", function(){\r",
+							"    pm.expect(pm.response.json().users.length).to.eq(1)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"description\", 'HRBB Event')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWJoaW5hbmQgU2FpIE5hc2FyaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp4aHdzdnZOS1hwUTctMHV1dENzbEZrOXp6WmZwZXIteDFZZE9hZz1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9jc2Vnc2EtcG9ydGFsIiwiYXVkIjoiY3NlZ3NhLXBvcnRhbCIsImF1dGhfdGltZSI6MTY1MTQ1MzU5NywidXNlcl9pZCI6Im5SVXZkZ0poaG9ocFlvZVdONUpKQkZOdkJwRTIiLCJzdWIiOiJuUlV2ZGdKaGhvaHBZb2VXTjVKSkJGTnZCcEUyIiwiaWF0IjoxNjUxNDUzNTk3LCJleHAiOjE2NTE0NTcxOTcsImVtYWlsIjoiYWJoaW5hbmRAdGFtdS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDMwMDEwMDE3NDg0NjQ5MTk4NSJdLCJlbWFpbCI6WyJhYmhpbmFuZEB0YW11LmVkdSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.dR9qvVi0LY-utLyRyaFn50w17ef0IGlM_WejZwyTfV_qkm56HTdajQatRubiql87LDyriw_zPYBlAfTTY_oaMb90XA5OMSrjrOTUnbMJkZBt3fnj_2TI5ueKHOS87Ni18OcX2Dl7R1OhxFYG4JyjTSM6CJxXFTzUG3qstjbdMvnjftxP0uFMj8VZqUQKGYuZm_H8Uj1g5KkyYDbysPCTzRAhSnXgEnjMcTSFrUH8JgEf5urgaAGstVV6JQZXtTHBPReykAM_UqyXX_UoWy2O84UEXukXzPgNoPfIw_ZyYKxcANeXg91lnA_0wYBF8EetDUrSntXAtUDzWsUwD8xBYg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"event_id\": \"{{created_event_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/events/addAttendee/"
+			},
+			"response": []
+		},
+		{
+			"name": "Event Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    \r",
+							"    const res_json = pm.response.json();\r",
+							"    const created_event_id = pm.collectionVariables.get(\"created_event_id\");\r",
+							"    pm.expect(res_json._id).to.eq(created_event_id)\r",
+							"    pm.expect(res_json.location).to.eq(\"HRBB 44\")\r",
+							"    pm.expect(res_json.description).to.eq(pm.collectionVariables.get(\"description\"))\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"description\", 'HRBB Event')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWJoaW5hbmQgU2FpIE5hc2FyaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp4aHdzdnZOS1hwUTctMHV1dENzbEZrOXp6WmZwZXIteDFZZE9hZz1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9jc2Vnc2EtcG9ydGFsIiwiYXVkIjoiY3NlZ3NhLXBvcnRhbCIsImF1dGhfdGltZSI6MTY1MTQ1MzU5NywidXNlcl9pZCI6Im5SVXZkZ0poaG9ocFlvZVdONUpKQkZOdkJwRTIiLCJzdWIiOiJuUlV2ZGdKaGhvaHBZb2VXTjVKSkJGTnZCcEUyIiwiaWF0IjoxNjUxNDUzNTk3LCJleHAiOjE2NTE0NTcxOTcsImVtYWlsIjoiYWJoaW5hbmRAdGFtdS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDMwMDEwMDE3NDg0NjQ5MTk4NSJdLCJlbWFpbCI6WyJhYmhpbmFuZEB0YW11LmVkdSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.dR9qvVi0LY-utLyRyaFn50w17ef0IGlM_WejZwyTfV_qkm56HTdajQatRubiql87LDyriw_zPYBlAfTTY_oaMb90XA5OMSrjrOTUnbMJkZBt3fnj_2TI5ueKHOS87Ni18OcX2Dl7R1OhxFYG4JyjTSM6CJxXFTzUG3qstjbdMvnjftxP0uFMj8VZqUQKGYuZm_H8Uj1g5KkyYDbysPCTzRAhSnXgEnjMcTSFrUH8JgEf5urgaAGstVV6JQZXtTHBPReykAM_UqyXX_UoWy2O84UEXukXzPgNoPfIw_ZyYKxcANeXg91lnA_0wYBF8EetDUrSntXAtUDzWsUwD8xBYg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/events/remove/{{created_event_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Event Fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 400\", function(){\r",
+							"    pm.response.to.have.status(400)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.message).to.eq(\"Events validation failed: end_time: Cast to date failed for value \\\"Invalid Date\\\" (type Date) at path \\\"end_time\\\"\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"description\", '{{$randomJobDescriptor}}')"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVmMzAxNjFhOWMyZGI3ODA5ZjQ1MTNiYjRlZDA4NzNmNDczMmY3MjEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiQWJoaW5hbmQgU2FpIE5hc2FyaSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp4aHdzdnZOS1hwUTctMHV1dENzbEZrOXp6WmZwZXIteDFZZE9hZz1zOTYtYyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9jc2Vnc2EtcG9ydGFsIiwiYXVkIjoiY3NlZ3NhLXBvcnRhbCIsImF1dGhfdGltZSI6MTY1MTQ1MzU5NywidXNlcl9pZCI6Im5SVXZkZ0poaG9ocFlvZVdONUpKQkZOdkJwRTIiLCJzdWIiOiJuUlV2ZGdKaGhvaHBZb2VXTjVKSkJGTnZCcEUyIiwiaWF0IjoxNjUxNDUzNTk3LCJleHAiOjE2NTE0NTcxOTcsImVtYWlsIjoiYWJoaW5hbmRAdGFtdS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJnb29nbGUuY29tIjpbIjExNDMwMDEwMDE3NDg0NjQ5MTk4NSJdLCJlbWFpbCI6WyJhYmhpbmFuZEB0YW11LmVkdSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.dR9qvVi0LY-utLyRyaFn50w17ef0IGlM_WejZwyTfV_qkm56HTdajQatRubiql87LDyriw_zPYBlAfTTY_oaMb90XA5OMSrjrOTUnbMJkZBt3fnj_2TI5ueKHOS87Ni18OcX2Dl7R1OhxFYG4JyjTSM6CJxXFTzUG3qstjbdMvnjftxP0uFMj8VZqUQKGYuZm_H8Uj1g5KkyYDbysPCTzRAhSnXgEnjMcTSFrUH8JgEf5urgaAGstVV6JQZXtTHBPReykAM_UqyXX_UoWy2O84UEXukXzPgNoPfIw_ZyYKxcANeXg91lnA_0wYBF8EetDUrSntXAtUDzWsUwD8xBYg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"kickoff\",\r\n    \"description\": \"{{description}}\",\r\n    \"start_time\": \"2022-04-22T14:55:00.301Z\",\r\n    \"end_time\": \"abds\",\r\n    \"location\": \"HRBB 44\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/events"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Jobs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://{{host}}/api/jobs"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Job Fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status is 400\", function(){\r",
+							"    pm.response.to.have.status(400)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"company_name\" : \"TAMU\",\r\n    \"title\" : \"title\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/jobs"
+			},
+			"response": []
+		},
+		{
+			"name": "getRoles Unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 401\", function(){\r",
+							"    pm.response.to.have.status(401)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"unauthorized\", function(){\r",
+							"    pm.expect(pm.response.text()).to.eq(\"Unauthorized\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" :{\r\n        \"email\" : \"abhinand@tamu.edu\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/api/roles?email=abhinand@tamu.edu",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"roles"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "abhinand@tamu.edu"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRoles Authorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.role).to.eq(\"admin\")\r",
+							"    pm.expect(res_json.email).to.eq(\"abhinand@tamu.edu\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" :{\r\n        \"email\" : \"abhinand@tamu.edu\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/api/roles?email=abhinand@tamu.edu",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"roles"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "abhinand@tamu.edu"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getALLRoles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" :{\r\n        \"email\" : \"abhinand@tamu.edu\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/roles/all"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRole Unaithorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 401\", function(){\r",
+							"    pm.response.to.have.status(401)\r",
+							"})\r",
+							"\r",
+							"// pm.test(\"response body contents\", function(){\r",
+							"//     const res_json = pm.response.json();\r",
+							"//     pm.expect(res_json.role).to.eq(\"officer\")\r",
+							"\r",
+							"// })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"role\" : \"officer\",\r\n    \"description\" : \"administrator with all privileges for the site\",\r\n    \"email\" : \"heman@tamu.edu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/roles"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRole",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"created_role_id\", pm.response.json()._id)\r",
+							"\r",
+							"pm.test(\"status is 201\", function(){\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.role).to.eq(\"officer\")\r",
+							"    pm.expect(res_json.email).to.eq(\"heman@tamu.edu\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"role\" : \"officer\",\r\n    \"description\" : \"administrator with all privileges for the site\",\r\n    \"email\" : \"heman@tamu.edu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/roles"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRole Duplicate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 400\", function(){\r",
+							"    pm.response.to.have.status(400)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.message).to.eq(\"A Role already exists for heman@tamu.edu\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"role\" : \"officer\",\r\n    \"description\" : \"administrator with all privileges for the site\",\r\n    \"email\" : \"heman@tamu.edu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/roles"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Role \\Unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 401\", function(){\r",
+							"    pm.response.to.have.status(401)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"heman@tamu.edu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/roles/{{created_roled_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Role",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.deletedCount).to.eq(1)\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/roles/{{created_role_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Role Again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 404\", function(){\r",
+							"    pm.response.to.have.status(404)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.message).to.eq(\"Role not found for heman@tamu.edu\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"heman@tamu.edu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/roles/{{created_role_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "ReCreateRole",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"created_role_id\", pm.response.json()._id)\r",
+							"\r",
+							"pm.test(\"status is 201\", function(){\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.role).to.eq(\"officer\")\r",
+							"    pm.expect(res_json.email).to.eq(\"heman@tamu.edu\")\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"role\" : \"officer\",\r\n    \"description\" : \"administrator with all privileges for the site\",\r\n    \"email\" : \"heman@tamu.edu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/roles"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Role",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"status is 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"response body contents\", function(){\r",
+							"    const res_json = pm.response.json();\r",
+							"    pm.expect(res_json.deletedCount).to.eq(1)\r",
+							"\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"heman@tamu.edu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{host}}/api/roles/{{created_role_id}}"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "description",
+			"value": ""
+		},
+		{
+			"key": "created_event_id",
+			"value": ""
+		},
+		{
+			"key": "created_role_id",
+			"value": ""
+		}
+	]
+}

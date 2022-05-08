@@ -4,20 +4,24 @@ import React from 'react'
 import { Container } from 'reactstrap'
 // core components
 
+export function prepView(pageHeader) {
+  if (window.innerWidth < 991) {
+    const updateScroll = () => {
+      const windowScrollTop = window.pageYOffset / 3
+      pageHeader.current.style.transform = 'translate3d(0,' + windowScrollTop + 'px,0)'
+    }
+    window.addEventListener('scroll', updateScroll)
+    return function cleanup() {
+      window.removeEventListener('scroll', updateScroll)
+    }
+  }
+}
+
 function EventPageHeader() {
   const pageHeader = React.createRef()
 
   React.useEffect(() => {
-    if (window.innerWidth < 991) {
-      const updateScroll = () => {
-        const windowScrollTop = window.pageYOffset / 3
-        pageHeader.current.style.transform = 'translate3d(0,' + windowScrollTop + 'px,0)'
-      }
-      window.addEventListener('scroll', updateScroll)
-      return function cleanup() {
-        window.removeEventListener('scroll', updateScroll)
-      }
-    }
+    prepView(pageHeader)
   })
 
   return (

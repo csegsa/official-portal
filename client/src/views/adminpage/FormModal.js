@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import RoleForm from './RoleForm'
 
 // eslint-disable-next-line react/prop-types
-const FormModal = ({ setInput }) => {
+const FormModal = ({ setInput, setReload }) => {
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
 
@@ -15,16 +15,9 @@ const FormModal = ({ setInput }) => {
       <Modal isOpen={modal}>
         <ModalHeader toggle={toggle}>Add a new Role</ModalHeader>
         <ModalBody>
-          <RoleForm setInput={setInput} />
+          <RoleForm setReload={setReload} setInput={setInput} toggle={toggle} />
         </ModalBody>
-        <ModalFooter>
-          {/* <Button
-                    color="primary"
-                    onClick={toggle}
-                >
-                    Close
-                </Button> */}
-        </ModalFooter>
+        <ModalFooter></ModalFooter>
       </Modal>
     </div>
   )

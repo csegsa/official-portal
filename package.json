@@ -11,11 +11,11 @@
   "jest": {
     "verbose": true,
     "transform": {
-        "^.+\\.(ts|tsx)$": "ts-jest"
+      "^.+\\.(ts|tsx)$": "ts-jest"
     }
   },
   "scripts": {
-    "test": "jest",
+    "test": "cd specs && npm run test",
     "start": "node server/index.js",
     "build": "npm install && cd client && npm install &&  export DISABLE_ESLINT_PLUGIN=true && npm run build",
     "lint": "eslint ./server --fix"
@@ -34,6 +34,7 @@
   "dependencies": {
     "@emailjs/browser": "^3.6.2",
     "body-parser": "^1.19.2",
+    "c8": "^7.11.2",
     "chai": "^4.3.6",
     "chromedriver": "^99.0.0",
     "cors": "^2.8.5",
@@ -52,9 +53,9 @@
     "eslint-config-google": "^0.14.0",
     "install": "^0.13.0",
     "jest": "^27.0.0",
-    "npm": "^8.5.5",
-    "ts-jest": "^27.1.4",
     "mocha": "^10.0.0",
-    "nyc": "^15.1.0"
+    "npm": "^8.5.5",
+    "nyc": "^15.1.0",
+    "ts-jest": "^27.1.4"
   }
 }

@@ -34,6 +34,10 @@ function MainNavbar() {
         console.log(res.data)
         if (res.data.role === 'admin') {
           setAdmin(true)
+        } else {
+          if (isAdmin) {
+            setAdmin(false)
+          }
         }
       })
   }
@@ -41,20 +45,14 @@ function MainNavbar() {
   React.useEffect(() => {
     if (user) {
       getAdmin()
-    } else {
-      if (isAdmin) {
-        setAdmin(false)
-      }
-    }
-  }, [])
-
-  React.useEffect(() => {
-    if (user) {
       console.log(user)
       setAuthenticated(true)
       setLoginText(user.email + ' (Log Out)')
     } else {
       setLoginText('Log In')
+      if (isAdmin) {
+        setAdmin(false)
+      }
     }
   }, [user])
 
@@ -124,7 +122,13 @@ function MainNavbar() {
               </NavItem>
               {isAdmin && (
                 <NavItem>
-                  <NavLink to="/admin" tag={Link}>
+                  <NavLink
+                    to={{
+                      pathname: '/admin',
+                      state: { isAdmin: isAdmin }
+                    }}
+                    tag={Link}
+                  >
                     Admin Portal
                   </NavLink>
                 </NavItem>
