@@ -72,11 +72,11 @@ const AddItem = () => {
           <FormGroup>
             <Container>
               <Row>
-                <Label for="Name">Location</Label>
+                <Label for="Location">Location</Label>
                 <Input
-                  id="Name"
-                  name="Name"
-                  placeholder="Event Name"
+                  id="Location"
+                  name="Location"
+                  placeholder="Location"
                   type="plaintext"
                   value={eventLocation}
                   onChange={e => setEventLocation(e.target.value)}

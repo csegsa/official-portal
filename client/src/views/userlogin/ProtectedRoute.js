@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 // eslint-disable-next-line react/prop-types
 function ProtectedRoute({ children, isAdmin }) {
   console.log(isAdmin)
-  return isAdmin ? children : <Redirect to="/login" replace />
+  return isAdmin ? children : <Redirect to="/login" />
 }
 
 export default ProtectedRoute

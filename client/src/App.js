@@ -30,13 +30,12 @@ function App() {
     }
   }
 
-  console.log(isAdmin)
-
   React.useEffect(async () => {
     console.log('opening protected route component')
     if (user) {
       await checkAdminStatus()
       console.log('awaiting done for check admin status')
+      console.log(isAdmin)
     }
   }, [user])
 
@@ -45,11 +44,11 @@ function App() {
       <Switch>
         <Route path="/home" render={props => <LandingPage {...props} />} />
         <Route path="/login" render={props => <LoginPage {...props} />} />
+        {/* <Route path="/login" component={LoginPage}/> */}
         <Route path="/events" render={props => <EventsPage {...props} />} />
         <Route path="/add-event" render={props => <AddEvent {...props} />} />
         <Route path="/jobs" render={props => <JobPostings {...props} />} />
         <Route path="/add-jobs" render={props => <JobForm {...props} />} />
-        {/* <Route path="/admin" render={props => <AdminPortal {...props} />} /> */}
         <Route
           path="/admin"
           render={props => (

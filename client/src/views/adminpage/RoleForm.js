@@ -72,11 +72,11 @@ const RoleForm = ({ setReload, toggle }) => {
       <Form onSubmit={handleSubmit}>
         {formFields.map(field => (
           <FormGroup className="mb-2 me-sm-2 mb-sm-0" key={field.title}>
-            <Label className="me-sm-2" for="exampleEmail" key={field.title}>
+            <Label className="me-sm-2" for="exampleEmail" key={field.title + '_label'}>
               {field.title}
             </Label>
             <Input
-              key={field.title}
+              key={field.title + '_title'}
               id={field.title}
               name={field.title}
               placeholder={field.title}
@@ -95,16 +95,13 @@ const RoleForm = ({ setReload, toggle }) => {
           <Dropdown isOpen={dropdown} toggle={toggleDropdown}>
             <DropdownToggle caret>{role === '' ? 'Availabel roles' : role}</DropdownToggle>
             <DropdownMenu>
-              <DropdownItem key="admin" onClick={() => setRole('Admin')} dropDownValue="Admin">
-                Admin
-              </DropdownItem>
-              <DropdownItem
-                key="coordinator"
-                onClick={() => setRole('Coordinator')}
-                dropDownValue="Coordinator"
-              >
-                Coordinator
-              </DropdownItem>
+              {['Admin', 'Coordinator'].map(role => (
+                <DropdownItem key={role} onClick={() => setRole(role)} dropDownValue={role}>
+                  {role}
+                </DropdownItem>
+              ))}
+              {/* <DropdownItem key="admin" onClick={() => setRole("Admin")} dropDownValue="Admin">Admin</DropdownItem>
+                    <DropdownItem key="coordinator" onClick={() => setRole("Coordinator")} dropDownValue="Coordinator">Coordinator</DropdownItem> */}
             </DropdownMenu>
           </Dropdown>
         </FormGroup>

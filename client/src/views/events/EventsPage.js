@@ -17,7 +17,7 @@ const EventsPage = () => {
   const [events, setEvents] = React.useState([])
   const [displayEvent, setDisplayEvent] = React.useState(null)
   const [user, loading, error] = useAuthState(auth)
-  const [showAddEvent, setShowAddEvent] = React.useState(false)
+  const [isAdmin, setIsAdmin] = React.useState(false)
   const [isRsvp, setIsRsvp] = React.useState(false)
 
   document.documentElement.classList.remove('nav-open')
@@ -50,12 +50,38 @@ const EventsPage = () => {
       })
   }
 
+  const deleteEvent = async eventId => {
+    const token = await auth.currentUser.getIdToken()
+    console.log('deleting id:', eventId)
+    console.log('token:', token)
+    csegsaApi
+      .post(
+        '/events/remove/' + eventId,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
+      .then(res => {
+        console.log('deleted events', res)
+        getEvents()
+        setDisplayEvent(null)
+      })
+      .catch(err => {
+        console.log(err)
+        console.log('Error deleting event')
+        alert('Error deleting event')
+      })
+  }
+
   async function updatePrivilegedOptionVisibility() {
     if (user) {
       const isAdmin = await checkAdminRole(user, loading, error, auth)
-      setShowAddEvent(isAdmin)
+      setIsAdmin(isAdmin)
     } else {
-      setShowAddEvent(false)
+      setIsAdmin(false)
     }
   }
 
@@ -71,6 +97,11 @@ const EventsPage = () => {
   })
 
   React.useEffect(() => {
+    getEvents()
+  }, [isRsvp])
+
+  const getEvents = () => {
+    console.log('calling getEvents...')
     csegsaApi
       .get('/events')
       .then(res => {
@@ -80,7 +111,7 @@ const EventsPage = () => {
       .catch(err => {
         console.log(err)
       })
-  }, [isRsvp])
+  }
 
   const viewEvent = arg => {
     const filterId = arg.event.id
@@ -111,6 +142,13 @@ const EventsPage = () => {
     </Card>
   )
 
+  const confirmDeleteEvent = async id => {
+    if (confirm('Are you sure you want to delete this event?')) {
+      // console.log("consider event deleted ", id)
+      await deleteEvent(id)
+    }
+  }
+
   if (displayEvent != null) {
     cardContent = (
       <Card className="ml-auto mr-auto">
@@ -135,6 +173,15 @@ const EventsPage = () => {
           >
             {isRsvp ? 'Attending' : 'RSVP'}
           </Button>
+          {isAdmin && (
+            <Button
+              color="danger"
+              outline
+              onClick={async () => confirmDeleteEvent(displayEvent._id)}
+            >
+              Remove
+            </Button>
+          )}
           <br />
           <br />
           <Link to={`/view-attendees/${displayEvent._id}`}>View Attendees</Link>
@@ -168,7 +215,7 @@ const EventsPage = () => {
               </Col>
               <Col md="4">
                 <Row>
-                  {showAddEvent ? (
+                  {isAdmin ? (
                     <Link to="/add-event" className="btn btn-danger">
                       Add Event
                     </Link>
