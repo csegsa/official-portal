@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Card } from 'reactstrap'
+import { Card, Button } from 'reactstrap'
 import csegsaApi from 'api/csegsaApi'
 
 const JobListing = () => {
@@ -8,12 +8,24 @@ const JobListing = () => {
   const [, setIsLoading] = useState(true)
 
   useEffect(() => {
+    getJobs()
+  }, [])
+
+  const getJobs = () => {
     csegsaApi.get('/jobs').then(res => {
       console.log(res.data)
       setJobs(res.data)
       setIsLoading(false)
     })
-  }, [])
+  }
+
+  const confirmDeleteJob = (index) => {
+    if (confirm("Are you sure you want to delete this job?")) {
+      console.log("consider job deleted ", index)
+      getJobs()
+      //fetch job listing again
+    } 
+  }
 
   return (
     <>
@@ -33,6 +45,9 @@ const JobListing = () => {
               <a href={item.url} className="btn btn-primary">
                 Website
               </a>
+              <Button color="danger" outline onClick={() => confirmDeleteJob(index)}>
+                  Remove
+              </Button>
             </div>
           </Card>
         )

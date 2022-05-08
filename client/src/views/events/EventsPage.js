@@ -47,6 +47,33 @@ const EventsPage = () => {
       })
   }
 
+  const deleteEvent = async eventId => {
+    const token = await auth.currentUser.getIdToken()
+    console.log("deleting id:", eventId)
+    csegsaApi
+      .post(
+        '/events/remove/:id',
+        {
+          event_id: eventId
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
+      .then(res => {
+        console.log('deleted events', res)
+        //fetch events again
+        getEvents()
+      })
+      .catch(err => {
+        console.log(err)
+        console.log('Error deleting event')
+        alert('Error deleting event')
+      })
+  }
+
   async function updatePrivilegedOptionVisibility() {
     if (user) {
       const isAdmin = await checkAdminRole(user, loading, error, auth)
@@ -68,6 +95,11 @@ const EventsPage = () => {
   })
 
   React.useEffect(() => {
+    getEvents()
+  }, [isRsvp])
+
+  const getEvents = () => {
+    console.log("calling getEvents...")
     csegsaApi
       .get('/events')
       .then(res => {
@@ -77,7 +109,7 @@ const EventsPage = () => {
       .catch(err => {
         console.log(err)
       })
-  }, [isRsvp])
+  }
 
   const viewEvent = arg => {
     const filterId = arg.event.id
@@ -109,6 +141,13 @@ const EventsPage = () => {
     </Card>
   )
 
+  const confirmDeleteEvent = (id) => {
+    if (confirm("Are you sure you want to delete this event?")) {
+      // console.log("consider event deleted ", id)
+      deleteEvent(id)
+    } 
+  }
+
   if (displayEvent != null) {
     cardContent = (
       <Card className="ml-auto mr-auto">
@@ -132,6 +171,9 @@ const EventsPage = () => {
             }}
           >
             {isRsvp ? 'Attending' : 'RSVP'}
+          </Button>
+          <Button color="danger" outline onClick={() => confirmDeleteEvent(displayEvent._id)}>
+            Remove
           </Button>
           <br />
           <br />

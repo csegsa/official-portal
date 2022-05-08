@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // reactstrap components
 import { Container } from 'reactstrap'
+import { Redirect } from 'react-router-dom'
 // core components
 import MainNavbar from 'components/Navbars/MainNavbar.js'
 import AdminPageHeader from 'components/Headers/AdminPageHeader'
@@ -22,23 +23,41 @@ const AdminPortal = ({location}) => {
     }
   })
 
-  const [isAdmin, setAdmin] = React.useState(false)
+  // useEffect(() => {
+  //   console.log(isAdminFromNavBar)
+  // }, [isAdminFromNavBar])
+
+  // useEffect(() => {
+  //   console.log(authenticated)
+  // }, [authenticated])
+
+
+  const [isAdmin, setAdmin] = React.useState(isAdminFromNavBar)
+  const [authenticated, setAuthenticated] = React.useState(location.state.authenticated)
   const [user] = useAuthState(auth)
 
+  useEffect(() => {
+    console.log(user)
+  }, [user])
+
   React.useEffect(() => {
-    console.log("user: ", user)
-    if(user && isAdminFromNavBar) {
-      setAdmin(true)
+    // console.log("user: ", user)
+    if(user) {
+      setAuthenticated(true)
+      if (isAdminFromNavBar) {
+        setAdmin(true)
+      }
     } else {
+      setAuthenticated(false)
       setAdmin(false)
     }
-  }, [user, isAdminFromNavBar])
+  }, [user])
 
   return (
     <>
       <MainNavbar />
       <AdminPageHeader />
-      {isAdmin ? (
+      {isAdmin && (
         <div>
           <Container>
             <h3>Admin Portal</h3>
@@ -47,7 +66,9 @@ const AdminPortal = ({location}) => {
             <AdminCard />
           </Container>
         </div>
-      ) : (
+      )}
+      
+      {authenticated && !isAdmin && (
         <div
           style={{
             fontWeight: 'bold',
@@ -57,6 +78,8 @@ const AdminPortal = ({location}) => {
           Access denied. You do not have privilege to this.
         </div>
       )}
+
+      {!authenticated && <Redirect to="/login" replace />}
       <MainFooter />
     </>
   )

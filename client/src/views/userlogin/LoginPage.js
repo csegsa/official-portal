@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useHistory, Redirect } from 'react-router-dom'
 // reactstrap components
@@ -11,19 +11,21 @@ import { auth, signInWithGoogle } from './Firebase'
 import MainNavbar from 'components/Navbars/MainNavbar.js'
 import backgroundImage from 'assets/img/csegsa/Academic.JPG'
 
-
 const RegisterPage = () => {
   const [user, , loading, error] = useAuthState(auth)
   const history = useHistory()
+  const [authenticated, setAuthenticated] = useState(false)
 
   useEffect(() => {
     console.log("user: ", user)
+    if(user) {
+      setAuthenticated(true)
+      console.log("user is authenticated")
+    } else {
+      console.log("user is NOT authenticated")
+      setAuthenticated(false)
+    }
   }, [user])
-
-  const login = () => {
-    signInWithGoogle()
-    history.goBack()
-  }
 
   // const goBack = () => history.goBack()
 
@@ -35,10 +37,15 @@ const RegisterPage = () => {
     }
   })
 
+  const login = () => {
+    console.log("Calling signing in with Google")
+    signInWithGoogle()
+    history.goBack()
+  }
 
   return (
     <>
-      {user != null && user.emailVerified
+      {authenticated
       ? 
       <Redirect to="/home" replace />
       :
