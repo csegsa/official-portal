@@ -22,6 +22,7 @@ const EventsPage = () => {
 
   document.documentElement.classList.remove('nav-open')
 
+  // this function gets triggered when the rsvp button is pressed. Adds the user email to the list of users for that event
   const handleSubmit = async eventId => {
     if (!user) {
       alert('Please login to RSVP')
@@ -40,6 +41,7 @@ const EventsPage = () => {
         }
       )
       .then(res => {
+        console.log(res)
         console.log('Added attendee to event')
         setIsRsvp(true)
       })
@@ -49,7 +51,7 @@ const EventsPage = () => {
         alert('Error adding event')
       })
   }
-
+  // setting the visibility for the add event button based on the privileges of the user
   async function updatePrivilegedOptionVisibility() {
     if (user) {
       const isAdmin = await checkAdminRole(user, loading, error, auth)
@@ -70,6 +72,7 @@ const EventsPage = () => {
     }
   })
 
+  // this function fetches the data for the events and stores them in the event variable defined on top.
   React.useEffect(() => {
     csegsaApi
       .get('/events')
@@ -103,6 +106,7 @@ const EventsPage = () => {
     }
   })
 
+  // card content when no event is selected.
   let cardContent = (
     <Card className="ml-auto mr-auto">
       <div className="card-body">
@@ -110,7 +114,7 @@ const EventsPage = () => {
       </div>
     </Card>
   )
-
+  // card content based on the event clicked.
   if (displayEvent != null) {
     cardContent = (
       <Card className="ml-auto mr-auto">
@@ -152,6 +156,7 @@ const EventsPage = () => {
           <Container>
             <Row>
               <Col md="8">
+                {/* The documentation for full calendar can be found at https://fullcalendar.io/docs#toc  */}
                 <FullCalendar
                   plugins={[dayGridPlugin, interactionPlugin, listPlugin]}
                   initialView="dayGridMonth"
