@@ -28,7 +28,7 @@ const JobListing = () => {
               </p>
               <p className="card-text">{item.description}</p>
               <p className="card-text">
-                <b>Deadline: {item.deadline}</b>
+                <b>Deadline: {new Date(item.deadline).toLocaleString()}</b>
               </p>
               <a href={item.url} className="btn btn-primary">
                 Website
