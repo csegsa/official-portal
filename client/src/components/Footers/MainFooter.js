@@ -34,7 +34,7 @@ function MainFooter() {
                                 <div>
                                     <span style={{marginRight:"20px"}}>
                                         <a
-                                            href="https://www.creative-tim.com?ref=pkr-footer"
+                                            href="https://www.facebook.com/groups/csegsa/"
                                             target="_blank"
                                         >
                                             <i className="fa fa-facebook fa-2x" style={{color:"#500000"}}/>
@@ -42,7 +42,7 @@ function MainFooter() {
                                     </span>
                                     <span style={{marginRight:"20px"}}>
                                         <a
-                                            href="https://www.creative-tim.com?ref=pkr-footer"
+                                            href="https://www.linkedin.com"
                                             target="_blank"
                                         >
                                             <i className="fa fa-linkedin fa-2x" style={{color:"#500000"}} />
@@ -50,7 +50,7 @@ function MainFooter() {
                                     </span>
                                     <span>
                                         <a
-                                            href="https://www.creative-tim.com?ref=pkr-footer"
+                                            href="https://www.twitter.com"
                                             target="_blank"
                                         >
                                             <i className="fa fa-twitter fa-2x" style={{color:"#500000"}} />
