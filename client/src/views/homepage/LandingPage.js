@@ -123,7 +123,7 @@ function LandingPage() {
                     <Button
                       className="btn-just-icon btn-neutral ml-1"
                       color="link"
-                      href="#pablo"
+                      href="#"
                       onClick={e => e.preventDefault()}
                     >
                       <i className="fa fa-google-plus" />
@@ -131,7 +131,7 @@ function LandingPage() {
                     <Button
                       className="btn-just-icon btn-neutral ml-1"
                       color="link"
-                      href="#pablo"
+                      href="#"
                       onClick={e => e.preventDefault()}
                     >
                       <i className="fa fa-linkedin" />
@@ -158,7 +158,7 @@ function LandingPage() {
                     <Button
                       className="btn-just-icon btn-neutral"
                       color="link"
-                      href="#pablo"
+                      href="#"
                       onClick={e => e.preventDefault()}
                     >
                       <i className="fa fa-twitter" />
@@ -166,7 +166,7 @@ function LandingPage() {
                     <Button
                       className="btn-just-icon btn-neutral ml-1"
                       color="link"
-                      href="#pablo"
+                      href="#"
                       onClick={e => e.preventDefault()}
                     >
                       <i className="fa fa-google-plus" />
@@ -174,7 +174,7 @@ function LandingPage() {
                     <Button
                       className="btn-just-icon btn-neutral ml-1"
                       color="link"
-                      href="#pablo"
+                      href="#"
                       onClick={e => e.preventDefault()}
                     >
                       <i className="fa fa-linkedin" />

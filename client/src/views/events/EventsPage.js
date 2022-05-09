@@ -17,11 +17,13 @@ const EventsPage = () => {
   const [events, setEvents] = React.useState([])
   const [displayEvent, setDisplayEvent] = React.useState(null)
   const [user, loading, error] = useAuthState(auth)
-  const [showAddEvent, setShowAddEvent] = React.useState(false)
+  const [isAdmin, setIsAdmin] = React.useState(false)
   const [isRsvp, setIsRsvp] = React.useState(false)
+  const [displayTime, setDisplayTime] = React.useState(null)
 
   document.documentElement.classList.remove('nav-open')
 
+  // this function gets triggered when the rsvp button is pressed. Adds the user email to the list of users for that event
   const handleSubmit = async eventId => {
     if (!user) {
       alert('Please login to RSVP')
@@ -50,12 +52,39 @@ const EventsPage = () => {
       })
   }
 
+  const deleteEvent = async eventId => {
+    const token = await auth.currentUser.getIdToken()
+    console.log('deleting id:', eventId)
+    console.log('token:', token)
+    csegsaApi
+      .post(
+        '/events/remove/' + eventId,
+        {},
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
+      .then(res => {
+        console.log('deleted events', res)
+        getEvents()
+        setDisplayEvent(null)
+      })
+      .catch(err => {
+        console.log(err)
+        console.log('Error deleting event')
+        alert('Error deleting event')
+      })
+  }
+
+  // setting the visibility for the add event button based on the privileges of the user
   async function updatePrivilegedOptionVisibility() {
     if (user) {
       const isAdmin = await checkAdminRole(user, loading, error, auth)
-      setShowAddEvent(isAdmin)
+      setIsAdmin(isAdmin)
     } else {
-      setShowAddEvent(false)
+      setIsAdmin(false)
     }
   }
 
@@ -70,7 +99,13 @@ const EventsPage = () => {
     }
   })
 
+  // this function fetches the data for the events and stores them in the event variable defined on top.
   React.useEffect(() => {
+    getEvents()
+  }, [isRsvp])
+
+  const getEvents = () => {
+    console.log('calling getEvents...')
     csegsaApi
       .get('/events')
       .then(res => {
@@ -80,7 +115,7 @@ const EventsPage = () => {
       .catch(err => {
         console.log(err)
       })
-  }, [isRsvp])
+  }
 
   const viewEvent = arg => {
     const filterId = arg.event.id
@@ -89,7 +124,9 @@ const EventsPage = () => {
     if (!selectedEvent) {
       return
     }
-
+    const formatTime = new Date(selectedEvent.start_time)
+    console.log(formatTime)
+    setDisplayTime(formatTime.toLocaleString())
     setIsRsvp(user && selectedEvent.users.indexOf(user.email) !== -1)
 
     setDisplayEvent(selectedEvent)
@@ -103,6 +140,7 @@ const EventsPage = () => {
     }
   })
 
+  // card content when no event is selected.
   let cardContent = (
     <Card className="ml-auto mr-auto">
       <div className="card-body">
@@ -111,21 +149,25 @@ const EventsPage = () => {
     </Card>
   )
 
+  const confirmDeleteEvent = async id => {
+    if (confirm('Are you sure you want to delete this event?')) {
+      // console.log("consider event deleted ", id)
+      await deleteEvent(id)
+    }
+  }
+
+  // card content based on the event clicked.
   if (displayEvent != null) {
     cardContent = (
       <Card className="ml-auto mr-auto">
         <div className="card-body">
           <h3 className="card-title">{displayEvent.name}</h3>
-          <h6 className="card-subtitle mb-2 text-muted">Event subtitle</h6>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the bulk of the
-            card&apos;s content.
-          </p>
+          <p className="card-text">{displayEvent.description}</p>
           <p className="card-text">
             <b>Venue: {displayEvent.location}</b>
           </p>
           <p className="card-text">
-            <b>Time: {displayEvent.start_time}</b>
+            <b>Time: {displayTime}</b>
           </p>
           <Button
             className={isRsvp ? 'btn btn-success' : 'btn btn-primary'}
@@ -135,6 +177,15 @@ const EventsPage = () => {
           >
             {isRsvp ? 'Attending' : 'RSVP'}
           </Button>
+          {isAdmin && (
+            <Button
+              color="danger"
+              outline
+              onClick={async () => confirmDeleteEvent(displayEvent._id)}
+            >
+              Remove
+            </Button>
+          )}
           <br />
           <br />
           <Link to={`/view-attendees/${displayEvent._id}`}>View Attendees</Link>
@@ -152,6 +203,7 @@ const EventsPage = () => {
           <Container>
             <Row>
               <Col md="8">
+                {/* The documentation for full calendar can be found at https://fullcalendar.io/docs#toc  */}
                 <FullCalendar
                   plugins={[dayGridPlugin, interactionPlugin, listPlugin]}
                   initialView="dayGridMonth"
@@ -168,7 +220,7 @@ const EventsPage = () => {
               </Col>
               <Col md="4">
                 <Row>
-                  {showAddEvent ? (
+                  {isAdmin ? (
                     <Link to="/add-event" className="btn btn-danger">
                       Add Event
                     </Link>

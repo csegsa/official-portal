@@ -1,5 +1,6 @@
 import Event from '../models/events.js';
 import Roles from '../models/roles.js';
+import Jobs from '../models/jobs.js';
 
 export const getAllEvents = async () => {
   return Event.find({});
@@ -20,3 +21,7 @@ export const deleteRoleById = async (id) => {
 export const storeEvent = async (event) => {
   return event.save();
 };
+
+export const deleteJobById = async (id) => {
+  return Jobs.findByIdAndDelete(id)
+}

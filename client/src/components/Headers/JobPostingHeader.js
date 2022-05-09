@@ -1,7 +1,7 @@
 import React from 'react'
 
 // reactstrap components
-import { Button, Container } from 'reactstrap'
+import { Container } from 'reactstrap'
 
 // core components
 
@@ -27,29 +27,14 @@ function JobPostingHeader() {
         style={{
           backgroundImage: 'url(' + require('assets/img/daniel-olahh.jpg').default + ')'
         }}
-        className="page-header"
+        className="page-header page-header-xs"
         data-parallax={true}
         ref={pageHeader}
       >
         <div className="filter" />
         <Container>
           <div className="motto text-center">
-            <h1>Job Posting page</h1>
-            <h3>Start designing your landing page here.</h3>
-            <br />
-            <Button
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-              className="btn-round mr-1"
-              color="neutral"
-              target="_blank"
-              outline
-            >
-              <i className="fa fa-play" />
-              Watch video
-            </Button>
-            <Button className="btn-round" color="neutral" type="button" outline>
-              Download
-            </Button>
+            <h1>Job Postings</h1>
           </div>
         </Container>
       </div>

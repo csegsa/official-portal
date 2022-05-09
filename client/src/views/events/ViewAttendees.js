@@ -14,6 +14,7 @@ const ViewAttendees = props => {
   console.log(eventId)
 
   console.log(props)
+  // view users list for the selected event. this is done using event id
   React.useEffect(() => {
     console.log('API call for event by ID')
     csegsaApi

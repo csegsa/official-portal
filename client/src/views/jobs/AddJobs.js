@@ -5,6 +5,7 @@ import React from 'react'
 import DateTimePicker from 'react-datetime-picker'
 import { Container, Input, Row, FormGroup, Label, Form, Button, Col } from 'reactstrap'
 import csegsaApi from 'api/csegsaApi'
+import { auth } from '../userlogin/Firebase'
 
 const AddJobs = () => {
   const [deadline, onDeadlineChange] = useState(new Date())
@@ -15,17 +16,26 @@ const AddJobs = () => {
   const [jobLocation, setJobLocation] = useState('')
   const history = useHistory()
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
+    const token = await auth.currentUser.getIdToken()
     csegsaApi
-      .post('/jobs', {
-        company_name: companyName,
-        job_title: jobTitle,
-        location: jobLocation,
-        description: jobDescription,
-        url: jobUrl,
-        deadline: deadline
-      })
+      .post(
+        '/jobs',
+        {
+          company_name: companyName,
+          job_title: jobTitle,
+          location: jobLocation,
+          description: jobDescription,
+          url: jobUrl,
+          deadline: deadline
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
       .then(res => {
         console.log(res)
         history.push('/jobs')

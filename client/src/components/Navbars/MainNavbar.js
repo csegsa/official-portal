@@ -45,7 +45,7 @@ function MainNavbar() {
   React.useEffect(() => {
     if (user) {
       getAdmin()
-      console.log(user)
+      // console.log(user)
       setAuthenticated(true)
       setLoginText(user.email + ' (Log Out)')
     } else {
@@ -125,7 +125,10 @@ function MainNavbar() {
                   <NavLink
                     to={{
                       pathname: '/admin',
-                      state: { isAdmin: isAdmin }
+                      state: {
+                        isAdmin: isAdmin,
+                        authenticated: authenticated
+                      }
                     }}
                     tag={Link}
                   >

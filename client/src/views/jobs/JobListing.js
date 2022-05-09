@@ -1,19 +1,51 @@
 import React, { useEffect, useState } from 'react'
 
-import { Card } from 'reactstrap'
+import { Card, Button } from 'reactstrap'
 import csegsaApi from 'api/csegsaApi'
+import checkAdminRole from '../../utils/CheckAdminRole'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../userlogin/Firebase'
 
 const JobListing = () => {
   const [jobs, setJobs] = useState([])
   const [, setIsLoading] = useState(true)
+  const [isAuthorizedToRemove, setIsAuthorizedToRemove] = useState(false)
+  const [user, loading, error] = useAuthState(auth)
 
   useEffect(() => {
+    getJobs()
+  }, [])
+
+  useEffect(async () => {
+    try {
+      const isAuthorized = await checkAdminRole(user, loading, error, auth)
+      setIsAuthorizedToRemove(isAuthorized)
+      console.log('Is Authorized: ', isAuthorized)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [user, loading, error, auth])
+
+  const getJobs = () => {
     csegsaApi.get('/jobs').then(res => {
       console.log(res.data)
       setJobs(res.data)
       setIsLoading(false)
     })
-  }, [])
+  }
+
+  const confirmDeleteJob = async id => {
+    if (confirm('Are you sure you want to delete this job?')) {
+      console.log('consider job deleted ', id)
+      try {
+        const token = await auth.currentUser.getIdToken()
+        await csegsaApi.delete(`/jobs/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        await getJobs()
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
   return (
     <>
@@ -28,11 +60,16 @@ const JobListing = () => {
               </p>
               <p className="card-text">{item.description}</p>
               <p className="card-text">
-                <b>Deadline: {item.deadline}</b>
+                <b>Deadline: {new Date(item.deadline).toLocaleString()}</b>
               </p>
-              <a href={item.url} className="btn btn-primary">
+              <a href={'https://' + item.url} className="btn btn-primary">
                 Website
               </a>
+              {isAuthorizedToRemove && (
+                <Button color="danger" outline onClick={() => confirmDeleteJob(item._id)}>
+                  Remove
+                </Button>
+              )}
             </div>
           </Card>
         )

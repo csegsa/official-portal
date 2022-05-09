@@ -22,6 +22,8 @@ const AddItem = () => {
     console.log(endTime.toISOString())
     console.log(eventName)
     const token = await auth.currentUser.getIdToken()
+
+    // based on the form values, send a post request to the backend to add event to the database.
     csegsaApi
       .post(
         '/events',
@@ -72,11 +74,11 @@ const AddItem = () => {
           <FormGroup>
             <Container>
               <Row>
-                <Label for="Name">Location</Label>
+                <Label for="Location">Location</Label>
                 <Input
-                  id="Name"
-                  name="Name"
-                  placeholder="Event Name"
+                  id="Location"
+                  name="Location"
+                  placeholder="Location"
                   type="plaintext"
                   value={eventLocation}
                   onChange={e => setEventLocation(e.target.value)}

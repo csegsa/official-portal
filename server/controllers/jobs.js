@@ -1,4 +1,5 @@
 import Job from "../models/jobs.js";
+import { deleteJobById } from '../services/database.js';
 
 export const getJobs = (req, res) => {
     Job.find({}, (err, jobs) => {
@@ -28,3 +29,13 @@ export const createJob = async (req, res) => {
         console.log(`Error creating job ${err}`);
     }
 };
+
+export const deleteJob = async (req, res) => {
+    try{
+        const deletedJob = await deleteJobById(req.params.id);
+        res.json(deletedJob).status(200);
+    } catch (err) {
+        res.status(400).send(err);
+        console.log(`Error deleting job ${err}`);
+    }
+}
