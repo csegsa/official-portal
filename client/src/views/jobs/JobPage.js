@@ -14,7 +14,7 @@ import checkAdminRole from 'utils/CheckAdminRole'
 import { auth } from '../userlogin/Firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 
-function JobPostings() {
+function JobPage() {
   const [user, loading, error] = useAuthState(auth)
   const [showAddJob, setShowAddJob] = React.useState(false)
   document.documentElement.classList.remove('nav-open')
@@ -59,4 +59,4 @@ function JobPostings() {
   )
 }
 
-export default JobPostings
+export default JobPage

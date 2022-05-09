@@ -2,14 +2,29 @@ import React, { useEffect, useState } from 'react'
 
 import { Card, Button } from 'reactstrap'
 import csegsaApi from 'api/csegsaApi'
+import checkAdminRole from '../../utils/CheckAdminRole'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../userlogin/Firebase'
 
 const JobListing = () => {
   const [jobs, setJobs] = useState([])
   const [, setIsLoading] = useState(true)
+  const [isAuthorizedToRemove, setIsAuthorizedToRemove] = useState(false)
+  const [user, loading, error] = useAuthState(auth)
 
   useEffect(() => {
     getJobs()
   }, [])
+
+  useEffect(async () => {
+    try {
+      const isAuthorized = await checkAdminRole(user, loading, error, auth)
+      setIsAuthorizedToRemove(isAuthorized)
+      console.log('Is Authorized: ', isAuthorized)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [user, loading, error, auth])
 
   const getJobs = () => {
     csegsaApi.get('/jobs').then(res => {
@@ -45,9 +60,11 @@ const JobListing = () => {
               <a href={'https://' + item.url} className="btn btn-primary">
                 Website
               </a>
-              <Button color="danger" outline onClick={() => confirmDeleteJob(index)}>
-                Remove
-              </Button>
+              {isAuthorizedToRemove && (
+                <Button color="danger" outline onClick={() => confirmDeleteJob(index)}>
+                  Remove
+                </Button>
+              )}
             </div>
           </Card>
         )

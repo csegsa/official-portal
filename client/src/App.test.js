@@ -2,7 +2,7 @@
 import React from 'react'
 import LandingPage from 'views/homepage/LandingPage'
 import LoginPage from 'views/userlogin/LoginPage'
-import JobPostings from 'views/jobs/JobPostings'
+import JobPage from 'views/jobs/JobPage'
 import EventsPage from 'views/events/EventsPage'
 import AddEvent from 'views/events/AddEvent'
 import JobForm from 'views/jobs/JobForm'
@@ -20,6 +20,6 @@ describe('Tests for App Router', () => {
   testRoutes(LoginPage, 'LoginPageMock', '/login')
   testRoutes(EventsPage, 'EventsPageMock', '/events')
   testRoutes(AddEvent, 'AddEventMock', '/add-event')
-  testRoutes(JobPostings, 'JobPostingsMock', '/jobs')
+  testRoutes(JobPage, 'JobPostingsMock', '/jobs')
   testRoutes(JobForm, 'JobFormMock', '/add-jobs')
 })
