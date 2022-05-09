@@ -34,11 +34,16 @@ const JobListing = () => {
     })
   }
 
-  const confirmDeleteJob = index => {
+  const confirmDeleteJob = async id => {
     if (confirm('Are you sure you want to delete this job?')) {
-      console.log('consider job deleted ', index)
-      getJobs()
-      // fetch job listing again
+      console.log('consider job deleted ', id)
+      try {
+        const token = await auth.currentUser.getIdToken()
+        await csegsaApi.delete(`/jobs/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        await getJobs()
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -61,7 +66,7 @@ const JobListing = () => {
                 Website
               </a>
               {isAuthorizedToRemove && (
-                <Button color="danger" outline onClick={() => confirmDeleteJob(index)}>
+                <Button color="danger" outline onClick={() => confirmDeleteJob(item._id)}>
                   Remove
                 </Button>
               )}
